@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import mockup from "../assets/mockup.png";
-import { TheCore } from "../components/ui/cards/thecore";
+import { TheCore } from "../components/ui/cards/the-core";
 import { Convos } from "@/components/ui/cards/convos";
-import { StoryControls, StoryItem } from "@/components/ui/StoryControls";
+import { StoryControls, StoryItem } from "@/components/ui/story-controls";
 
 export const Route = createFileRoute("/results")({
   component: RouteComponent,

@@ -1,63 +1,6 @@
 import { useEffect, useRef } from "react";
 import totalConvos from "@/assets/cards/total-convos.png";
 
-// Load fonts outside the component
-const loadFonts = (() => {
-  let fontsLoaded = false;
-
-  return async () => {
-    if (fontsLoaded) return;
-
-    // Load DM Sans with multiple weights
-    if (!document.getElementById("dmsans-font")) {
-      const dmSansLink = document.createElement("link");
-      dmSansLink.id = "dmsans-font";
-      dmSansLink.rel = "stylesheet";
-      dmSansLink.href =
-        "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;700&display=swap";
-      document.head.appendChild(dmSansLink);
-    }
-
-    // Load Poppins with multiple weights
-    if (!document.getElementById("poppins-font")) {
-      const poppinsLink = document.createElement("link");
-      poppinsLink.id = "poppins-font";
-      poppinsLink.rel = "stylesheet";
-      poppinsLink.href =
-        "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap";
-      document.head.appendChild(poppinsLink);
-    }
-
-    try {
-      // Wait for fonts to be loaded
-      await document.fonts.ready;
-
-      // Check if our specific fonts are loaded (checking different weights)
-      const fontWeights = ["300", "400", "700"]; // light, regular, bold
-      const dmSansLoaded = fontWeights.every((weight) =>
-        document.fonts.check(`${weight} 36px 'DM Sans'`)
-      );
-      const poppinsLoaded = fontWeights.every((weight) =>
-        document.fonts.check(`${weight} 36px 'Poppins'`)
-      );
-
-      if (!dmSansLoaded || !poppinsLoaded) {
-        // If not loaded yet, wait a bit more
-        await new Promise((resolve) => setTimeout(resolve, 500));
-      }
-
-      fontsLoaded = true;
-    } catch (error) {
-      console.error("Error loading fonts:", error);
-    }
-  };
-})();
-
-// Load fonts immediately when this module is imported
-if (typeof window !== "undefined") {
-  loadFonts();
-}
-
 interface ConvosProps {
   totalConversations: string;
   nameOne: string;
@@ -74,8 +17,8 @@ export function Convos({
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    // Ensure fonts are loaded, then render
-    loadFonts().then(renderCanvas);
+    // Render canvas when component mounts
+    renderCanvas();
 
     function renderCanvas() {
       const canvas = canvasRef.current;
@@ -116,7 +59,7 @@ export function Convos({
     }
 
     return () => {
-      // No need for cleanup as fonts are loaded globally
+      // No cleanup needed
     };
   }, [conversationsTogether, nameOne, nameTwo, totalConversations]);
 
