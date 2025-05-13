@@ -2,27 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { FileDropZone } from "../components/ui/file-drop-zone";
 import { VideoPlayer } from "../components/ui/video-player";
 import { useState } from "react";
-import demoVideo from "../assets/demo.mp4";
 import { useNavigate } from "@tanstack/react-router";
 import { TimelineSteps } from "../components/ui/timeline-steps";
 import CookieConsent from "react-cookie-consent";
 
 export const Route = createFileRoute("/")({
   component: Index,
-  head: () => ({
-    links: [
-      {
-        rel: "preload",
-        as: "image",
-        href: "thumbnail.webp",
-      },
-      {
-        rel: "preload",
-        as: "image",
-        href: "mockup.webp",
-      },
-    ],
-  }),
 });
 
 function Index() {
@@ -61,7 +46,7 @@ function Index() {
         <h3 className="text-2xl text-white font-semibold mb-8 text-center">
           How To Use WhatsWrapped
         </h3>
-        <VideoPlayer src={demoVideo} thumbnail="/thumbnail.jpeg" />
+        <VideoPlayer src={"/demo.webm"} thumbnail="/thumbnail.jpeg" />
 
         <TimelineSteps />
       </div>

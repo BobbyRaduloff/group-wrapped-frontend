@@ -2,15 +2,13 @@ import { useState, useRef, useEffect } from "react";
 
 interface VideoPlayerProps {
   src: string;
-  thumbnail?: string;
 }
 
-export function VideoPlayer({ src, thumbnail }: VideoPlayerProps) {
+export function VideoPlayer({ src }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [hasStartedPlaying, setHasStartedPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const togglePlay = () => {
@@ -19,7 +17,6 @@ export function VideoPlayer({ src, thumbnail }: VideoPlayerProps) {
         videoRef.current.pause();
       } else {
         videoRef.current.play();
-        setHasStartedPlaying(true);
       }
       setIsPlaying(!isPlaying);
     }
@@ -127,17 +124,8 @@ export function VideoPlayer({ src, thumbnail }: VideoPlayerProps) {
       >
         <div className="relative h-full flex flex-col">
           <div className="flex-1 relative">
-            {thumbnail && !hasStartedPlaying && (
-              <div className="absolute inset-0 z-[5]">
-                <img
-                  src={thumbnail}
-                  alt="Video thumbnail"
-                  className="w-full h-full object-cover brightness-50 hover:cursor-pointer"
-                  onClick={togglePlay}
-                />
-              </div>
-            )}
             <video
+              poster="/thumbnail.webp"
               ref={videoRef}
               className="w-full h-full object-cover absolute inset-0"
               src={src}
