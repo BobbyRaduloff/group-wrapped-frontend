@@ -66,7 +66,7 @@ export function Emojis({
         ctx.font = `bold 64px 'Abhaya Libre', sans-serif`;
 
         ctx.fillStyle = "#323233";
-        ctx.fillText(`${emojiOneN} Times`, 450, 1125);
+        ctx.fillText(`${emojiOneN} Times`, 450, 1130);
 
         // Add the other emojis if they're used
         if (emojiTwo) {
@@ -93,15 +93,9 @@ export function Emojis({
           );
 
           // If emoji count is provided, render it
-          if (emojiThreeN) {
-            renderEmojiCount(
-              ctx,
-              emojiThreeN,
-              displayWidth / 2 + 350,
-              1500,
-              48
-            );
-          }
+          ctx.font = `bold 48px 'Abhaya Libre', sans-serif`;
+          ctx.fillStyle = "#323233";
+          ctx.fillText(`${emojiThreeN} Times`, 640, 1680);
         }
       };
     }
@@ -150,54 +144,6 @@ export function Emojis({
         y - emojiSize / 2,
         emojiSize,
         emojiSize
-      );
-    }
-
-    function renderEmojiCount(
-      ctx: CanvasRenderingContext2D,
-      count: number,
-      x: number,
-      y: number,
-      fontSize: number
-    ) {
-      // Create a temporary canvas for the count
-      const countCanvas = document.createElement("canvas");
-      const countWidth = fontSize * 3; // Width depends on digits
-      const countHeight = fontSize * 1.5;
-
-      // Make the temp canvas much larger for vector-like quality
-      const scale = 4;
-      countCanvas.width = countWidth * scale;
-      countCanvas.height = countHeight * scale;
-
-      const countCtx = countCanvas.getContext("2d");
-      if (!countCtx) return;
-
-      // Scale up
-      countCtx.scale(scale, scale);
-
-      // Settings for text rendering
-      countCtx.textBaseline = "middle";
-      countCtx.textAlign = "center";
-      countCtx.font = `bold ${fontSize}px 'Abhaya Libre', sans-serif`;
-
-      // Enable smoothing
-      countCtx.imageSmoothingEnabled = true;
-      countCtx.imageSmoothingQuality = "high";
-
-      // Draw count with format (e.g., "×123")
-      countCtx.fillStyle = "#323233";
-      countCtx.fillText(`${count} Times`, countWidth / 2, countHeight / 2);
-
-      // Draw onto main canvas
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "high";
-      ctx.drawImage(
-        countCanvas,
-        x - countWidth / 2,
-        y - countHeight / 2,
-        countWidth,
-        countHeight
       );
     }
 

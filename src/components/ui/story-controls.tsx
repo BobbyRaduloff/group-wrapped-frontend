@@ -273,7 +273,7 @@ export function StoryControls({
       </div>
 
       {/* Instagram Share Button */}
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center z-10">
+      <div className="absolute bottom-2 left-0 right-0 flex justify-center z-10">
         <button
           onClick={shareToInstagram}
           className="bg-gradient-to-br from-[#956A75] text-white px-16 py-4 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
