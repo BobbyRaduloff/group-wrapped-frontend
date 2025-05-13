@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FileDropZone } from "../components/ui/file-drop-zone";
 import { VideoPlayer } from "../components/ui/video-player";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import demoVideo from "../assets/demo.mp4";
 import { useNavigate } from "@tanstack/react-router";
 import { TimelineSteps } from "../components/ui/timeline-steps";
