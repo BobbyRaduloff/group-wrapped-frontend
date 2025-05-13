@@ -36,6 +36,8 @@ export function FileDropZone({
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // @ts-ignore
+    gtag("event", "upload");
     if (e.target.files && e.target.files.length > 0) {
       validateAndProcessFile(e.target.files[0]);
     }
@@ -171,7 +173,7 @@ export function FileDropZone({
 
       <p className="mt-8 text-center w-full">
         By uploading, you agree to our{" "}
-        <Link to="/toc" className="underline">
+        <Link to="/tac" className="underline">
           Terms and Conditions
         </Link>
         .

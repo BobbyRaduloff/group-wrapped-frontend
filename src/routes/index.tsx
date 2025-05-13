@@ -5,6 +5,7 @@ import { useState } from "react";
 import demoVideo from "../assets/demo.mp4";
 import { useNavigate } from "@tanstack/react-router";
 import { TimelineSteps } from "../components/ui/timeline-steps";
+import CookieConsent from "react-cookie-consent";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -94,7 +95,7 @@ function Index() {
           hello@whatswrapped.me
         </a>
         <br />
-        <Link to="/toc" className="underline">
+        <Link to="/tac" className="underline">
           Terms and Conditions
         </Link>
         .
@@ -103,6 +104,14 @@ function Index() {
         <br />
         All Rights Reserved.
       </p>
+      <CookieConsent>
+        This website uses cookies to enhance the user experience. Learn more in
+        our{" "}
+        <Link to="/tac" className="underline">
+          Terms and Conditions
+        </Link>
+        .
+      </CookieConsent>
     </div>
   );
 }

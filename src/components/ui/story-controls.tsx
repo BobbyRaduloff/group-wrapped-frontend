@@ -25,7 +25,7 @@ export function StoryControls({
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState<number[]>(
-    stories.map((_, i) => (i < initialIndex ? 100 : 0))
+    stories.map((_, i) => (i < initialIndex ? 100 : 0)),
   );
   const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -127,7 +127,7 @@ export function StoryControls({
 
   const handleTouchEnd = (
     e: React.TouchEvent,
-    goToStory: (() => void) | null = null
+    goToStory: (() => void) | null = null,
   ) => {
     e.preventDefault(); // Prevent default selection behavior
     handleResume();
@@ -150,6 +150,8 @@ export function StoryControls({
 
   // Handler for sharing to Instagram
   const shareToInstagram = async () => {
+    // @ts-ignore
+    gtag("event", "share");
     const currentStory = stories[currentIndex];
 
     try {
@@ -185,7 +187,7 @@ export function StoryControls({
                 new File(
                   [await (await fetch(imageUrl)).blob()],
                   "whatswrapped-story.png",
-                  { type: "image/png" }
+                  { type: "image/png" },
                 ),
               ],
             })
@@ -210,7 +212,7 @@ export function StoryControls({
         }
       } else {
         console.log(
-          "No image URL available for sharing and couldn't capture screenshot"
+          "No image URL available for sharing and couldn't capture screenshot",
         );
       }
     } catch (error) {
