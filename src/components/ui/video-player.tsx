@@ -36,7 +36,7 @@ export function VideoPlayer({ src }: VideoPlayerProps) {
     if (videoRef.current) {
       videoRef.current.currentTime = Math.max(
         0,
-        videoRef.current.currentTime - 10,
+        videoRef.current.currentTime - 10
       );
     }
   };
@@ -45,7 +45,7 @@ export function VideoPlayer({ src }: VideoPlayerProps) {
     if (videoRef.current) {
       videoRef.current.currentTime = Math.min(
         videoRef.current.duration,
-        videoRef.current.currentTime + 10,
+        videoRef.current.currentTime + 10
       );
     }
   };
@@ -93,7 +93,7 @@ export function VideoPlayer({ src }: VideoPlayerProps) {
         videoElement.removeEventListener("timeupdate", updateProgress);
         videoElement.removeEventListener(
           "loadedmetadata",
-          handleLoadedMetadata,
+          handleLoadedMetadata
         );
         videoElement.removeEventListener("play", handlePlay);
         videoElement.removeEventListener("pause", handlePause);
@@ -145,7 +145,7 @@ export function VideoPlayer({ src }: VideoPlayerProps) {
               onClick={togglePlay}
             >
               {!isPlaying && (
-                <div className="w-16 h-16 bg-background/80 rounded-full flex items-center justify-center z-10">
+                <div className="w-16 h-16 bg-[#6D5262] rounded-full flex items-center justify-center z-10">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -201,7 +201,7 @@ export function VideoPlayer({ src }: VideoPlayerProps) {
                   </button>
 
                   <button
-                    className="text-white bg-background hover:bg-[#44624a] p-2 rounded-full transition-colors"
+                    className="text-white bg-background hover:bg-[#6D5262] p-2 rounded-full transition-colors hover:cursor-pointer"
                     onClick={togglePlay}
                   >
                     {isPlaying ? (

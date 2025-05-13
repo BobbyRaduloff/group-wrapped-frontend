@@ -25,7 +25,7 @@ export function StoryControls({
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState<number[]>(
-    stories.map((_, i) => (i < initialIndex ? 100 : 0)),
+    stories.map((_, i) => (i < initialIndex ? 100 : 0))
   );
   const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -46,7 +46,7 @@ export function StoryControls({
       onComplete();
     } else {
       const newProgress = [...progress];
-      newProgress[currentIndex] = 100;
+      newProgress[currentIndex] = 0;
       setProgress(newProgress);
       setCurrentIndex(0);
       setPaused(false);
@@ -127,7 +127,7 @@ export function StoryControls({
 
   const handleTouchEnd = (
     e: React.TouchEvent,
-    goToStory: (() => void) | null = null,
+    goToStory: (() => void) | null = null
   ) => {
     e.preventDefault(); // Prevent default selection behavior
     handleResume();
@@ -187,7 +187,7 @@ export function StoryControls({
                 new File(
                   [await (await fetch(imageUrl)).blob()],
                   "whatswrapped-story.png",
-                  { type: "image/png" },
+                  { type: "image/png" }
                 ),
               ],
             })
@@ -212,7 +212,7 @@ export function StoryControls({
         }
       } else {
         console.log(
-          "No image URL available for sharing and couldn't capture screenshot",
+          "No image URL available for sharing and couldn't capture screenshot"
         );
       }
     } catch (error) {
@@ -221,7 +221,7 @@ export function StoryControls({
   };
 
   return (
-    <div className={`w-full h-full ${className}`}>
+    <div className={`w-full h-full relative overflow-hidden ${className}`}>
       {/* Story content */}
       <div
         ref={storyContentRef}
@@ -244,7 +244,7 @@ export function StoryControls({
         {stories.map((story, index) => (
           <div
             key={story.id}
-            className={`${index === currentIndex ? "block" : "hidden"}`}
+            className={`${index === currentIndex ? "block" : "hidden"} h-full`}
           >
             {story.content}
           </div>
@@ -252,7 +252,7 @@ export function StoryControls({
       </div>
 
       {/* Story indicators */}
-      <div className="absolute top-6 left-0 right-0 flex justify-center gap-2 px-8 z-0">
+      <div className="absolute top-12 left-0 right-0 flex justify-center gap-2 px-8 z-0">
         {stories.map((_, index) => (
           <div
             key={index}
@@ -273,12 +273,12 @@ export function StoryControls({
       </div>
 
       {/* Instagram Share Button */}
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center z-10">
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center z-10">
         <button
           onClick={shareToInstagram}
-          className="bg-[#ca9541] text-white px-12 py-2 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
+          className="bg-gradient-to-br from-[#956A75] text-white px-16 py-4 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
         >
-          <span className="font-bold text-white">Share</span>
+          <span className="font-bold text-white text-xl">Share</span>
         </button>
       </div>
 

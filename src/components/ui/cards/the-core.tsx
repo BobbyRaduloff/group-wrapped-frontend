@@ -32,15 +32,20 @@ export function TheCore({ name }: TheCoreProps) {
       ctx.fillText(
         "The core is the heart of the group,",
         canvas.width / 2,
-        canvas.height / 2 + 440,
+        canvas.height / 2 + 440
       );
       ctx.fillText(
         "the person most people interact with.",
         canvas.width / 2,
-        canvas.height / 2 + 490,
+        canvas.height / 2 + 490
       );
     };
   }, [name]);
 
-  return <canvas ref={canvasRef} className="w-full h-auto rounded-4xl" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="w-full h-full rounded-4xl object-contain"
+    />
+  );
 }
