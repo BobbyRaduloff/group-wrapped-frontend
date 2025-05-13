@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { FileDropZone } from "../components/ui/file-drop-zone";
 import { VideoPlayer } from "../components/ui/video-player";
 import { useState } from "react";
@@ -26,7 +26,7 @@ function Index() {
   };
 
   return (
-    <div className="w-screen overflow-x-hidden min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none bg-gradient-to-b from-background via-[#c0cfb2] to-background">
+    <div className="w-screen overflow-x-hiddn min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none">
       <motion.h1
         className="text-4xl md:text-5xl font-bold text-white mb-2"
         initial={{ opacity: 0, y: -20 }}
@@ -55,7 +55,7 @@ function Index() {
         >
           <FileDropZone
             onFileSelect={handleFileSelect}
-            acceptedFileTypes={[".txt"]}
+            acceptedFileTypes={[".txt", ".zip"]}
           />
         </motion.div>
         {selectedFile && (
@@ -117,6 +117,18 @@ function Index() {
 
         <TimelineSteps />
       </motion.div>
+
+      <p className="mt-8">
+        Contact us at{" "}
+        <a className="underline" href="mailto:hello@whatswrapped.me">
+          hello@whatswrapped.me
+        </a>
+        .{" "}
+        <Link to="/toc" className="underline">
+          Terms and Conditions
+        </Link>
+        .
+      </p>
     </div>
   );
 }

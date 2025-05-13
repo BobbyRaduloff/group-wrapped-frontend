@@ -9,7 +9,7 @@ export function TimelineSteps() {
       transition={{ delay: 0.7 }}
     >
       {/* Timeline connector */}
-      <div className="absolute left-6 md:left-1/2 top-0 bottom-36 lg:bottom-0 w-1 bg-gradient-to-b from-white/0 via-white/20 to-white/0 -translate-x-1/2 z-0"></div>
+      <div className="absolute left-6 md:left-1/2 top-0 bottom-36 lg:bottom-0 w-1 translate-x-1/2 z-0"></div>
 
       {/* Step 1 */}
       <motion.div

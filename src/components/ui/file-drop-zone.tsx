@@ -9,8 +9,8 @@ interface FileDropZoneProps {
 
 export function FileDropZone({
   onFileSelect,
-  acceptedFileTypes = [".txt"],
-  maxSize = 5 * 1024 * 1024, // 5MB default
+  acceptedFileTypes = [".txt", ".zip"],
+  maxSize = 1 * 1024 * 1024, // 5MB default
 }: FileDropZoneProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +47,7 @@ export function FileDropZone({
     const fileType = file.name.substring(file.name.lastIndexOf("."));
     if (acceptedFileTypes.length > 0 && !acceptedFileTypes.includes(fileType)) {
       setError(
-        `Invalid file type. Accepted types: ${acceptedFileTypes.join(", ")}`
+        `Invalid file type. Accepted types: ${acceptedFileTypes.join(", ")}`,
       );
       return;
     }
@@ -146,9 +146,11 @@ export function FileDropZone({
             animate={{ opacity: isDragging ? 0.3 : 1 }}
           >
             <h3 className="text-lg font-medium text-white">
-              {isDragging ? "Drop it!" : "Drag & Drop your WhatsApp chat file"}
+              {isDragging
+                ? "Drop it!"
+                : "Click to upload your WhatsApp chat file!"}
             </h3>
-            <p className="mt-1 text-sm text-white/80">or click to browse</p>
+            <p className="mt-1 text-sm text-white/80">or drag and drop</p>
           </motion.div>
         </motion.div>
 

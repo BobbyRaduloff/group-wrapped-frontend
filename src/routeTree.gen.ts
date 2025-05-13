@@ -11,11 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TocImport } from './routes/toc'
 import { Route as ResultsImport } from './routes/results'
 import { Route as LoadingImport } from './routes/loading'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const TocRoute = TocImport.update({
+  id: '/toc',
+  path: '/toc',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const ResultsRoute = ResultsImport.update({
   id: '/results',
@@ -60,6 +67,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResultsImport
       parentRoute: typeof rootRoute
     }
+    '/toc': {
+      id: '/toc'
+      path: '/toc'
+      fullPath: '/toc'
+      preLoaderRoute: typeof TocImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -69,12 +83,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/loading': typeof LoadingRoute
   '/results': typeof ResultsRoute
+  '/toc': typeof TocRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/loading': typeof LoadingRoute
   '/results': typeof ResultsRoute
+  '/toc': typeof TocRoute
 }
 
 export interface FileRoutesById {
@@ -82,14 +98,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/loading': typeof LoadingRoute
   '/results': typeof ResultsRoute
+  '/toc': typeof TocRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/loading' | '/results'
+  fullPaths: '/' | '/loading' | '/results' | '/toc'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/loading' | '/results'
-  id: '__root__' | '/' | '/loading' | '/results'
+  to: '/' | '/loading' | '/results' | '/toc'
+  id: '__root__' | '/' | '/loading' | '/results' | '/toc'
   fileRoutesById: FileRoutesById
 }
 
@@ -97,12 +114,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoadingRoute: typeof LoadingRoute
   ResultsRoute: typeof ResultsRoute
+  TocRoute: typeof TocRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoadingRoute: LoadingRoute,
   ResultsRoute: ResultsRoute,
+  TocRoute: TocRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +136,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/loading",
-        "/results"
+        "/results",
+        "/toc"
       ]
     },
     "/": {
@@ -128,6 +148,9 @@ export const routeTree = rootRoute
     },
     "/results": {
       "filePath": "results.tsx"
+    },
+    "/toc": {
+      "filePath": "toc.tsx"
     }
   }
 }
