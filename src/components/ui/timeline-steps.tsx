@@ -30,8 +30,8 @@ export function TimelineSteps() {
               Step 2: Upload Chat
             </h3>
             <p className="text-white/80">
-              Save the exported chat file to your device, then drag and drop it
-              into the upload area above.
+              Save the exported chat file to your device, then click on the
+              upload area above to analyze it.
             </p>
           </div>
         </div>
