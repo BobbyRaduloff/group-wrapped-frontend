@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import mockupImage from "../../assets/mockup.png";
 
 interface VideoPlayerProps {
   src: string;
@@ -109,7 +108,7 @@ export function VideoPlayer({ src, thumbnail }: VideoPlayerProps) {
     <div className="relative max-w-sm mx-auto">
       {/* Phone mockup image */}
       <img
-        src={mockupImage}
+        src={"/mockup.png"}
         alt="Phone mockup"
         className="w-full pointer-events-none z-10 relative"
       />

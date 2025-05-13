@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import mockup from "../assets/mockup.png";
 import { TheCore } from "../components/ui/cards/the-core";
 import { Convos } from "@/components/ui/cards/convos";
 import { StoryControls, StoryItem } from "@/components/ui/story-controls";
@@ -50,7 +49,7 @@ function RouteComponent() {
           <StoryControls stories={storyItems} />
         </div>
         <img
-          src={mockup}
+          src={"/mockup.png"}
           alt="Phone Mockup"
           className="w-[22rem] lg:w-[28rem] object-contain mt-[.6rem] lg:mt-8 relative z-10 pointer-events-none"
         />
