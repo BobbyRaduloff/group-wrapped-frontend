@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FileDropZone } from "../components/ui/file-drop-zone";
 import { VideoPlayer } from "../components/ui/video-player";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import demoVideo from "../assets/demo.mp4";
 import { useNavigate } from "@tanstack/react-router";
 import { TimelineSteps } from "../components/ui/timeline-steps";
@@ -104,7 +104,17 @@ function Index() {
         <br />
         All Rights Reserved.
       </p>
-      <CookieConsent>
+      <CookieConsent
+        onAccept={() => {
+          // @ts-ignore
+          gtag("consent", "update", {
+            ad_storage: "granted",
+            ad_user_data: "granted",
+            ad_personalization: "granted",
+            analytics_storage: "granted",
+          });
+        }}
+      >
         This website uses cookies to enhance the user experience. Learn more in
         our{" "}
         <Link to="/tac" className="underline">
