@@ -103,13 +103,13 @@ function RouteComponent() {
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center lg:justify-center p-8 py-8 select-none">
       <div
-        className={`h-[90%] lg:h-auto lg:w-1/4 transition-opacity duration-700 ease-in-out ${isLoaded ? "opacity-100" : "opacity-0"}`}
+        className={`h-[75%] lg:h-auto lg:w-1/4 transition-opacity duration-700 ease-in-out ${isLoaded ? "opacity-100" : "opacity-0"}`}
       >
         <StoryControls stories={storyItems} />
       </div>
       <Link
         to="/"
-        className={`flex flex-row items-center absolute top-4 left-4 transition-opacity duration-700 ease-in-out ${isLoaded ? "opacity-100" : "opacity-0"}`}
+        className={`hidden lg:flex flex-row items-center absolute top-4 left-4 transition-opacity duration-700 ease-in-out ${isLoaded ? "opacity-100" : "opacity-0"}`}
       >
         <img src="/logo.webp" className="w-24" />
         <h1 className="text-4xl md:text-5xl font-bold text-white">
