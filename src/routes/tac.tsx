@@ -624,6 +624,42 @@ function RouteComponent() {
           timeframes and conditions set out under GDPR.
         </li>
       </ol>
+
+      <h2>14. GOOGLE ANALYTICS COOKIES</h2>
+      <ol>
+        <li>
+          The Service uses Google Analytics, a web-analytics service provided by
+          Google LLC (“Google”), which deploys cookies to collect anonymous
+          usage statistics.
+        </li>
+        <li>
+          Cookies such as <code>_ga</code>, <code>_gid</code>, and{" "}
+          <code>_gat</code> store aggregated information including pages
+          visited, session duration, browser type, and approximate geographic
+          location. This data does not personally identify you.
+        </li>
+        <li>
+          WhatsWrapped uses the aggregated data solely to analyze and improve
+          the performance, usability, and content of the Service.
+        </li>
+        <li>
+          You can disable Google Analytics cookies at any time via your browser
+          settings or by installing the{" "}
+          <a
+            href="https://tools.google.com/dlpage/gaoptout"
+            target="_blank"
+            rel="noopener"
+          >
+            Google Analytics Opt-out Browser Add-on
+          </a>
+          .
+        </li>
+        <li>
+          By continuing to use the Service without disabling analytics cookies,
+          you consent to the processing of data about you by Google in the
+          manner and for the purposes set out above.
+        </li>
+      </ol>
     </div>
   );
 }
