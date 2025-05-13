@@ -46,7 +46,7 @@ function Index() {
         <h3 className="text-2xl text-white font-semibold mb-8 text-center">
           How To Use WhatsWrapped
         </h3>
-        <VideoPlayer src={"/demo.webm"} thumbnail="/thumbnail.jpeg" />
+        <VideoPlayer src={"/demo.webm"} />
 
         <TimelineSteps />
       </div>
