@@ -17,7 +17,7 @@ export function TimelineSteps() {
             </p>
           </div>
         </div>
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#44624a]/80 shadow-lg absolute left-6 md:left-1/2 -translate-x-1/2 top-0 md:top-1/2 md:-translate-y-1/2">
+        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 shadow-lg absolute left-6 md:left-1/2 -translate-x-1/2 top-0 md:top-1/2 md:-translate-y-1/2">
           <span className="text-white font-bold">1</span>
         </div>
       </div>
@@ -35,7 +35,7 @@ export function TimelineSteps() {
             </p>
           </div>
         </div>
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#44624a]/80 shadow-lg absolute left-6 md:left-1/2 -translate-x-1/2 top-0 md:top-1/2 md:-translate-y-1/2">
+        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 shadow-lg absolute left-6 md:left-1/2 -translate-x-1/2 top-0 md:top-1/2 md:-translate-y-1/2">
           <span className="text-white font-bold">2</span>
         </div>
       </div>
@@ -54,7 +54,7 @@ export function TimelineSteps() {
             </p>
           </div>
         </div>
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#44624a]/80 shadow-lg absolute left-6 md:left-1/2 -translate-x-1/2 top-0 md:top-1/2 md:-translate-y-1/2">
+        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 shadow-lg absolute left-6 md:left-1/2 -translate-x-1/2 top-0 md:top-1/2 md:-translate-y-1/2">
           <span className="text-white font-bold">3</span>
         </div>
       </div>

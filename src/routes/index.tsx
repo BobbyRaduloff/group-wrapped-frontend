@@ -40,9 +40,12 @@ function Index() {
 
   return (
     <div className="w-screen overflow-x-hiddn min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none">
-      <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-        WhatsWrapped
-      </h1>
+      <div className="flex flex-row gap-2 items-center justify-center mb-2">
+        <img src="/logo.webp" className="w-24" />
+        <h1 className="text-4xl md:text-5xl font-bold text-white">
+          WhatsWrapped
+        </h1>
+      </div>
       <h2 className="text-xl md:text-2xl text-white mb-10 text-center">
         Get insights from your WhatsApp conversations.
       </h2>
