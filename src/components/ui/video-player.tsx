@@ -108,7 +108,7 @@ export function VideoPlayer({ src, thumbnail }: VideoPlayerProps) {
     <div className="relative max-w-sm mx-auto">
       {/* Phone mockup image */}
       <img
-        src={"/mockup.png"}
+        src={"/mockup.webp"}
         alt="Phone mockup"
         className="w-full pointer-events-none z-10 relative"
       />

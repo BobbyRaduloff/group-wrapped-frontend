@@ -221,11 +221,11 @@ export function StoryControls({
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`w-full h-full ${className}`}>
       {/* Story content */}
       <div
         ref={storyContentRef}
-        className="relative"
+        className="w-full h-full"
         onMouseDown={handlePause}
         onMouseUp={handleResume}
         onTouchStart={(e) => {

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /tac
+Disallow: /loading
+Disallow: /results

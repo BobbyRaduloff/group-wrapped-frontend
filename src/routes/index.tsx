@@ -14,24 +14,24 @@ export const Route = createFileRoute("/")({
       {
         rel: "preload",
         as: "image",
-        href: "thumbnail.jpeg",
+        href: "thumbnail.webp",
       },
       {
         rel: "preload",
         as: "image",
-        href: "mockup.png",
+        href: "mockup.webp",
       },
     ],
   }),
 });
 
 function Index() {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [_, setSelectedFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
   const handleFileSelect = (file: File) => {
     setSelectedFile(file);
-    console.log("File selected:", file.name);
+    handleContinue();
   };
 
   const handleContinue = () => {
@@ -53,32 +53,6 @@ function Index() {
           acceptedFileTypes={[".txt", ".zip"]}
         />
       </div>
-      {selectedFile && (
-        <div key="fileInfo" className="w-full p-6 flex flex-col items-center">
-          <div className="flex items-start mb-4">
-            <label htmlFor="terms" className="text-white/80 text-sm">
-              By clicking continue, you agree to our{" "}
-              <a href="#" className="text-white/80 font-medium underline">
-                Terms of Service
-              </a>{" "}
-              and{" "}
-              <a href="#" className="text-white/80 font-medium underline">
-                Privacy Policy
-              </a>
-              .
-            </label>
-          </div>
-
-          <div>
-            <button
-              className="px-4 py-2 bg-[#44624a] text-white rounded-md hover:bg-[#3a533f] transition-all hover:scale-105 duration-300 hover:cursor-pointer"
-              onClick={handleContinue}
-            >
-              Continue
-            </button>
-          </div>
-        </div>
-      )}
 
       <div className="w-full mt-16 max-w-5xl mx-auto">
         <h3 className="text-2xl text-white font-semibold mb-8 text-center">

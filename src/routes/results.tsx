@@ -43,17 +43,7 @@ function RouteComponent() {
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-start lg:justify-center p-8 py-0 select-none">
-      <h1 className="text-4xl font-bold">WhatsWrapped Results</h1>
-      <div className="relative">
-        <div className="absolute top-[1rem] lg:top-[3rem] left-1/2 transform -translate-x-1/2 w-[82%] z-0">
-          <StoryControls stories={storyItems} />
-        </div>
-        <img
-          src={"/mockup.png"}
-          alt="Phone Mockup"
-          className="w-[22rem] lg:w-[28rem] object-contain mt-[.6rem] lg:mt-8 relative z-10 pointer-events-none"
-        />
-      </div>
+      <StoryControls stories={storyItems} />
     </div>
   );
 }

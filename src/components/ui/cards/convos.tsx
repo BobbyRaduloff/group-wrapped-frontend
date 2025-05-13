@@ -30,8 +30,8 @@ export function Convos({
       const img = new Image();
       img.src = totalConvos;
       img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
+        canvas.width = window.outerWidth;
+        canvas.height = window.outerHeight;
 
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
@@ -42,7 +42,7 @@ export function Convos({
         ctx.fillText(
           "Total Conversations: " + totalConversations,
           canvas.width / 2 - 40,
-          375
+          375,
         );
 
         // Set font with fallback options (light weight)
@@ -53,7 +53,7 @@ export function Convos({
         ctx.fillText(
           conversationsTogether,
           canvas.width / 2,
-          canvas.height / 2 + 490
+          canvas.height / 2 + 490,
         );
       };
     }
@@ -63,5 +63,5 @@ export function Convos({
     };
   }, [conversationsTogether, nameOne, nameTwo, totalConversations]);
 
-  return <canvas ref={canvasRef} className="w-full h-auto rounded-4xl" />;
+  return <canvas ref={canvasRef} className="w-full h-full rounded-4xl" />;
 }
