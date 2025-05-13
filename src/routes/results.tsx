@@ -42,7 +42,7 @@ function RouteComponent() {
   ];
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-start lg:justify-center p-8 py-0 select-none">
+    <div className="w-full min-h-screen flex flex-col items-center justify-start lg:justify-center p-8 py-8 select-none">
       <StoryControls stories={storyItems} />
     </div>
   );

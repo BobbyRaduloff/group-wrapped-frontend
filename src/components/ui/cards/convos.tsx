@@ -30,8 +30,8 @@ export function Convos({
       const img = new Image();
       img.src = totalConvos;
       img.onload = () => {
-        canvas.width = window.outerWidth;
-        canvas.height = window.outerHeight;
+        canvas.width = img.width;
+        canvas.height = img.height;
 
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
@@ -63,5 +63,5 @@ export function Convos({
     };
   }, [conversationsTogether, nameOne, nameTwo, totalConversations]);
 
-  return <canvas ref={canvasRef} className="w-full h-full rounded-4xl" />;
+  return <canvas ref={canvasRef} className="w-full h-auto rounded-4xl" />;
 }

@@ -18,7 +18,7 @@ interface StoryControlsProps {
 export function StoryControls({
   stories,
   initialIndex = 0,
-  duration = 6000,
+  duration = 10000,
   onComplete,
   className = "",
 }: StoryControlsProps) {
@@ -46,7 +46,7 @@ export function StoryControls({
       onComplete();
     } else {
       const newProgress = [...progress];
-      newProgress[currentIndex] = 0;
+      newProgress[currentIndex] = 100;
       setProgress(newProgress);
       setCurrentIndex(0);
       setPaused(false);
@@ -276,7 +276,7 @@ export function StoryControls({
       <div className="absolute bottom-6 left-0 right-0 flex justify-center z-10">
         <button
           onClick={shareToInstagram}
-          className="bg-gradient-to-r from-[#c0cfb2] to-[#8ba888] text-white px-12 py-2 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
+          className="bg-[#ca9541] text-white px-12 py-2 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
         >
           <span className="font-bold text-white">Share</span>
         </button>
