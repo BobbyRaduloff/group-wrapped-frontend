@@ -118,16 +118,20 @@ function Index() {
         <TimelineSteps />
       </motion.div>
 
-      <p className="mt-8">
+      <p className="mt-8 text-center">
         Contact us at{" "}
         <a className="underline" href="mailto:hello@whatswrapped.me">
           hello@whatswrapped.me
         </a>
-        .{" "}
+        <br />
         <Link to="/toc" className="underline">
           Terms and Conditions
         </Link>
         .
+        <br />
+        Copyright (c) 2025.
+        <br />
+        All Rights Reserved.
       </p>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "@tanstack/react-router";
 
 interface FileDropZoneProps {
   onFileSelect: (file: File) => void;
@@ -167,6 +168,14 @@ export function FileDropZone({
           )}
         </AnimatePresence>
       </motion.div>
+
+      <p className="mt-8 text-center w-full">
+        By uploading, you agree to our{" "}
+        <Link to="/toc" className="underline">
+          Terms and Conditions
+        </Link>
+        .
+      </p>
     </div>
   );
 }
