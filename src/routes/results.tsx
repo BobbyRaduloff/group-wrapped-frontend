@@ -103,7 +103,7 @@ function RouteComponent() {
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center lg:justify-center p-8 py-8 select-none">
       <div
-        className={`h-[75%] lg:h-auto lg:w-1/4 transition-opacity duration-700 ease-in-out ${isLoaded ? "opacity-100" : "opacity-0"}`}
+        className={`h-[60%] lg:h-auto lg:w-1/4 transition-opacity duration-700 ease-in-out ${isLoaded ? "opacity-100" : "opacity-0"}`}
       >
         <StoryControls stories={storyItems} />
       </div>
