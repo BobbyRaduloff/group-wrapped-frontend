@@ -13,7 +13,7 @@ import { TheBot } from "@/components/ui/cards/thebot";
 import { TheBasicBiatch } from "@/components/ui/cards/thebasicbiatch";
 import { TimCheese } from "@/components/ui/cards/timcheese";
 import { Duo } from "@/components/ui/cards/duo";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TheLurker } from "@/components/ui/cards/thelurker";
 import { z } from "zod";
 import { WrappedData } from "@/types/results";
@@ -38,13 +38,19 @@ function RouteComponent() {
     [result],
   );
 
+  const [urls, setURLS] = useState<Record<string, string>>({});
+
   const calculated = useMemo(() => {
     if (!parsed) return [];
 
     const storyItems: StoryItem[] = [
       {
         id: "welcome",
-        content: <Welcome />,
+        content: (
+          <Welcome
+            callback={(s) => setURLS((prev) => ({ ...prev, welcome: s }))}
+          />
+        ),
       },
     ];
 
@@ -71,6 +77,7 @@ function RouteComponent() {
           messagesTwo={m2.count}
           nameThree={m3.sender.substring(0, 15)}
           messagesThree={m3.count}
+          callback={(s) => setURLS((prev) => ({ ...prev, messages: s }))}
         />
       ),
     });
@@ -83,7 +90,11 @@ function RouteComponent() {
       storyItems.push({
         id: "lastplace",
         content: (
-          <LastPlace name={guy.sender.substring(0, 15)} messages={guy.count} />
+          <LastPlace
+            name={guy.sender.substring(0, 15)}
+            messages={guy.count}
+            callback={(s) => setURLS((prev) => ({ ...prev, lastplace: s }))}
+          />
         ),
       });
     }
@@ -110,6 +121,7 @@ function RouteComponent() {
           emojiTwoN={e2.count}
           emojiThree={e3.emoji}
           emojiThreeN={e3.count}
+          callback={(s) => setURLS((prev) => ({ ...prev, emojis: s }))}
         />
       ),
     });
@@ -121,6 +133,7 @@ function RouteComponent() {
           nameOne={parsed.statistics.couple.personOne.substring(0, 15)}
           nameTwo={parsed.statistics.couple.personTwo.substring(0, 15)}
           totalConversations={parsed.statistics.couple.count}
+          callback={(s) => setURLS((prev) => ({ ...prev, duo: s }))}
         />
       ),
     });
@@ -140,7 +153,16 @@ function RouteComponent() {
         JESTER: TheJester,
       } as const;
       const F = mp[c.type];
-      storyItems.push({ id: c.type, content: <F name={n} messagesSent={m} /> });
+      storyItems.push({
+        id: c.type,
+        content: (
+          <F
+            name={n}
+            messagesSent={m}
+            callback={(s) => setURLS((prev) => ({ ...prev, [c.type]: s }))}
+          />
+        ),
+      });
     }
 
     return storyItems;
@@ -149,9 +171,9 @@ function RouteComponent() {
   return (
     <div className="w-full h-[90vh] flex flex-col items-center justify-start lg:justify-center p-8 py-2 select-none">
       <div
-        className={`h-[50%] lg:h-auto lg:w-1/4 mt-8 transition-opacity duration-700 ease-in-out opacity-100`}
+        className={`h-[100%] lg:h-auto lg:w-1/4 mt-8 transition-opacity duration-700 ease-in-out opacity-100`}
       >
-        <StoryControls stories={calculated} />
+        <StoryControls stories={calculated} urls={urls} />
       </div>
 
       <Link

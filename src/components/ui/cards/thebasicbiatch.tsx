@@ -5,9 +5,15 @@ import thebasicbiatch from "@/assets/cards/thebasicbiatch.png";
 interface TheBasicBiatchProps {
   name: string;
   messagesSent: number;
+
+  callback: (_arg0: string) => void;
 }
 
-export function TheBasicBiatch({ name, messagesSent }: TheBasicBiatchProps) {
+export function TheBasicBiatch({
+  name,
+  messagesSent,
+  callback,
+}: TheBasicBiatchProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -130,13 +136,14 @@ export function TheBasicBiatch({ name, messagesSent }: TheBasicBiatchProps) {
         canvas.width - 220,
         40,
       );
+
+      callback(canvas.toDataURL("image/png"));
     }
   }, [name, messagesSent]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-[70%] mt-8 h-full rounded-4xl object-contain mx-auto"
-    />
+    <div className="w-[70%] mt-8 h-full rounded-4xl mx-auto">
+      <canvas ref={canvasRef} className="w-full h-full object-contain" />
+    </div>
   );
 }

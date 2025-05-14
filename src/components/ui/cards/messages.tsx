@@ -9,6 +9,8 @@ interface MessagesProps {
   messagesTwo: number;
   messagesThree: number;
   totalMessages: number;
+
+  callback: (_arg0: string) => void;
 }
 
 export function Messages({
@@ -19,6 +21,7 @@ export function Messages({
   messagesOne,
   messagesTwo,
   messagesThree,
+  callback,
 }: MessagesProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -86,6 +89,8 @@ export function Messages({
         canvas.width / 2,
         750,
       );
+
+      callback(canvas.toDataURL("image/png"));
     }
   }, [
     messagesOne,
@@ -98,9 +103,8 @@ export function Messages({
   ]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-[70%] mt-8 h-full rounded-4xl object-contain mx-auto"
-    />
+    <div className="w-[70%] mt-8 h-full rounded-4xl mx-auto">
+      <canvas ref={canvasRef} className="w-full h-full object-contain" />
+    </div>
   );
 }

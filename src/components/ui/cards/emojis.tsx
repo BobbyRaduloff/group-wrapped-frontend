@@ -10,6 +10,8 @@ interface EmojisProps {
   emojiOneN: number;
   emojiTwoN: number;
   emojiThreeN: number;
+
+  callback: (_arg0: string) => void;
 }
 
 export function Emojis({
@@ -19,6 +21,7 @@ export function Emojis({
   emojiOneN,
   emojiTwoN,
   emojiThreeN,
+  callback,
 }: EmojisProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -112,6 +115,8 @@ export function Emojis({
         ctx.fillStyle = "#323233";
         ctx.fillText(`${emojiThreeN} Times`, 640, 1680);
       }
+
+      callback(canvas.toDataURL("image/png"));
     }
 
     function renderEmojiAsVector(
@@ -163,9 +168,8 @@ export function Emojis({
   }, [emojiOne, emojiTwo, emojiThree, emojiOneN, emojiTwoN, emojiThreeN]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-[70%] mt-8 h-full rounded-4xl object-contain mx-auto"
-    />
+    <div className="w-[70%] mt-8 h-full rounded-4xl mx-auto">
+      <canvas ref={canvasRef} className="w-full h-full object-contain" />
+    </div>
   );
 }

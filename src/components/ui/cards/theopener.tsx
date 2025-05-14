@@ -5,9 +5,11 @@ import theopener from "@/assets/cards/theopener.png";
 interface TheOpenerProps {
   name: string;
   messagesSent: number;
+
+  callback: (_arg0: string) => void;
 }
 
-export function TheOpener({ name, messagesSent }: TheOpenerProps) {
+export function TheOpener({ name, messagesSent, callback }: TheOpenerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -128,13 +130,14 @@ export function TheOpener({ name, messagesSent }: TheOpenerProps) {
         canvas.width - 220,
         40,
       );
+
+      callback(canvas.toDataURL("image/png"));
     }
   }, [name, messagesSent]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-[70%] mt-8 h-full rounded-4xl object-contain mx-auto"
-    />
+    <div className="w-[70%] mt-8 h-full rounded-4xl mx-auto">
+      <canvas ref={canvasRef} className="w-full h-full object-contain" />
+    </div>
   );
 }

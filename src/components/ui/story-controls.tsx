@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import html2canvas from "html2canvas";
 import { useNavigate } from "@tanstack/react-router";
 
 export interface StoryItem {
   content: React.ReactNode;
   id: string;
-  imageUrl?: string; // Optional image URL for sharing
 }
 
 interface StoryControlsProps {
@@ -14,6 +12,8 @@ interface StoryControlsProps {
   duration?: number; // in milliseconds
   onComplete?: () => void;
   className?: string;
+
+  urls: Record<string, string>;
 }
 
 export function StoryControls({
@@ -22,6 +22,7 @@ export function StoryControls({
   duration = 10000,
   onComplete,
   className = "",
+  urls,
 }: StoryControlsProps) {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
@@ -31,7 +32,6 @@ export function StoryControls({
   );
   const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const storyContentRef = useRef<HTMLDivElement>(null);
   const isTouchRef = useRef(false);
 
   const goToNextStory = useCallback(() => {
@@ -152,83 +152,45 @@ export function StoryControls({
     }
   };
 
-  // Handler for sharing to Instagram
+  async function dataURLtoFile(dataUrl: string, filename = "story.png") {
+    const res = await fetch(dataUrl); // fetch treats data-URLs fine
+    const blob = await res.blob();
+    const mime = blob.type || "image/png"; // fallback mime if none
+    return new File([blob], filename, { type: mime });
+  }
+
   const shareToInstagram = async () => {
-    // @ts-ignore
-    gtag("event", "share");
-    const currentStory = stories[currentIndex];
-
     try {
-      // If we have a direct image URL, use that
-      if (currentStory?.imageUrl) {
-        if (navigator.share) {
-          navigator
-            .share({
-              title: "My WhatsWrapped Story!",
-              url: currentStory.imageUrl,
-            })
-            .catch((error) => console.log("Error sharing:", error));
-        } else {
-          // Fallback to opening Instagram with the URL
-          window.open(`https://www.instagram.com/`, "_blank");
-        }
-      }
-      // Otherwise, capture the current story as an image
-      else if (storyContentRef.current) {
-        // Show loading state or feedback
-        console.log("Capturing story for sharing...");
+      // @ts-ignore             // GTM event is fine
+      gtag("event", "share");
 
-        // Capture the current story as an image
-        const canvas = await html2canvas(storyContentRef.current);
-        const imageUrl = canvas.toDataURL("image/png");
+      const currentStory = stories[currentIndex];
+      const dataUrl = urls[currentStory.id]; // base64 data-URL
+      const file = await dataURLtoFile(dataUrl);
 
-        if (navigator.share) {
-          navigator
-            .share({
-              title: "My WhatsWrapped Story!",
-              text: "Check out my WhatsWrapped Story!",
-              files: [
-                new File(
-                  [await (await fetch(imageUrl)).blob()],
-                  "whatswrapped-story.png",
-                  { type: "image/png" },
-                ),
-              ],
-            })
-            .catch((error) => {
-              console.log("Error sharing:", error);
-              // Fallback if file sharing fails
-              navigator
-                .share({
-                  title: "My WhatsWrapped Story!",
-                  text: "Check out my WhatsWrapped Story!",
-                })
-                .catch((e) => console.log("Error in fallback sharing:", e));
-            });
-        } else {
-          // Create a download link as fallback
-          const link = document.createElement("a");
-          link.href = imageUrl;
-          link.download = "whatswrapped-story.png";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+      const shareData: ShareData = {
+        text: "My WhatsWrapped Story!",
+        files: [file], // ✅ Level-2 feature
+      };
+
+      if (navigator.canShare?.(shareData)) {
+        try {
+          await navigator.share(shareData);
+        } catch (err) {
+          console.error("Share aborted:", err);
         }
       } else {
-        console.log(
-          "No image URL available for sharing and couldn't capture screenshot",
-        );
+        window.open(dataUrl, "_blank");
+        console.warn("Web Share with files isn’t supported here.");
       }
-    } catch (error) {
-      console.error("Error in sharing process:", error);
+    } catch (e) {
+      alert(e);
     }
   };
-
   return (
     <div className={`w-full h-full ${className}`}>
       {/* Story content */}
       <div
-        ref={storyContentRef}
         className="w-full h-full"
         onMouseDown={handlePause}
         onMouseUp={handleResume}

@@ -5,9 +5,11 @@ import thespammer from "@/assets/cards/thespammer.png";
 interface TheSpammerProps {
   name: string;
   messagesSent: number;
+
+  callback: (_arg0: string) => void;
 }
 
-export function TheSpammer({ name, messagesSent }: TheSpammerProps) {
+export function TheSpammer({ name, messagesSent, callback }: TheSpammerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -128,13 +130,14 @@ export function TheSpammer({ name, messagesSent }: TheSpammerProps) {
         canvas.width - 220,
         40,
       );
+
+      callback(canvas.toDataURL("image/png"));
     }
   }, [name, messagesSent]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-[70%] mt-8 h-full rounded-4xl object-contain mx-auto"
-    />
+    <div className="w-[70%] mt-8 h-full rounded-4xl mx-auto">
+      <canvas ref={canvasRef} className="w-full h-full object-contain" />
+    </div>
   );
 }

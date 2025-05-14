@@ -5,9 +5,11 @@ import thelurker from "@/assets/cards/thelurker.png";
 interface TheLurkerProps {
   name: string;
   messagesSent: number;
+
+  callback: (_arg0: string) => void;
 }
 
-export function TheLurker({ name, messagesSent }: TheLurkerProps) {
+export function TheLurker({ name, messagesSent, callback }: TheLurkerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -128,13 +130,14 @@ export function TheLurker({ name, messagesSent }: TheLurkerProps) {
         canvas.width - 220,
         40,
       );
+
+      callback(canvas.toDataURL("image/png"));
     }
   }, [name, messagesSent]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-[70%] mt-8 h-full rounded-4xl object-contain mx-auto"
-    />
+    <div className="w-[70%] mt-8 h-full rounded-4xl mx-auto">
+      <canvas ref={canvasRef} className="w-full h-full object-contain" />
+    </div>
   );
 }

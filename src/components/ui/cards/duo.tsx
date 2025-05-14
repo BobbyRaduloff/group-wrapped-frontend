@@ -5,9 +5,16 @@ interface DuoProps {
   nameOne: string;
   nameTwo: string;
   totalConversations: number;
+
+  callback: (_arg0: string) => void;
 }
 
-export function Duo({ totalConversations, nameOne, nameTwo }: DuoProps) {
+export function Duo({
+  totalConversations,
+  nameOne,
+  nameTwo,
+  callback,
+}: DuoProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -55,13 +62,14 @@ export function Duo({ totalConversations, nameOne, nameTwo }: DuoProps) {
         canvas.width / 2,
         canvas.height - 325,
       );
+
+      callback(canvas.toDataURL("image/png"));
     }
   }, [nameOne, nameTwo, totalConversations]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-[70%] mt-8 h-full rounded-4xl object-contain mx-auto"
-    />
+    <div className="w-[70%] mt-8 h-full rounded-4xl mx-auto">
+      <canvas ref={canvasRef} className="w-full h-full object-contain" />
+    </div>
   );
 }

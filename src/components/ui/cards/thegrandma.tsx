@@ -5,9 +5,11 @@ import thegrandma from "@/assets/cards/thegrandma.png";
 interface TheGrandmaProps {
   name: string;
   messagesSent: number;
+
+  callback: (_arg0: string) => void;
 }
 
-export function TheGrandma({ name, messagesSent }: TheGrandmaProps) {
+export function TheGrandma({ name, messagesSent, callback }: TheGrandmaProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -128,13 +130,14 @@ export function TheGrandma({ name, messagesSent }: TheGrandmaProps) {
         canvas.width - 220,
         40,
       );
+
+      callback(canvas.toDataURL("image/png"));
     }
   }, [name, messagesSent]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-[70%] mt-8 h-full rounded-4xl object-contain mx-auto"
-    />
+    <div className="w-[70%] mt-8 h-full rounded-4xl mx-auto">
+      <canvas ref={canvasRef} className="w-full h-full object-contain" />
+    </div>
   );
 }

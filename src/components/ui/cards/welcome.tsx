@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
 import welcome from "@/assets/cards/welcome.png";
 
-export function Welcome() {
+export interface Props {
+  callback: (_arg0: string) => void;
+}
+
+export function Welcome({ callback }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -34,13 +38,14 @@ export function Welcome() {
       ctx.fillStyle = "#ffffff";
       ctx.textAlign = "center";
       ctx.fillText("WhatsWrapped.me", canvas.width / 2, 120);
+
+      callback(canvas.toDataURL("image/png"));
     }
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-[70%] mt-8 h-full rounded-4xl object-contain mx-auto"
-    />
+    <div className="w-[70%] mt-8 h-full rounded-4xl mx-auto">
+      <canvas ref={canvasRef} className="w-full h-full object-contain" />
+    </div>
   );
 }

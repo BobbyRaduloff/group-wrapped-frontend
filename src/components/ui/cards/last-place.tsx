@@ -4,9 +4,11 @@ import lastplace from "@/assets/cards/last-place.png";
 interface LastPlaceProps {
   name: string;
   messages: number;
+
+  callback: (_arg0: string) => void;
 }
 
-export function LastPlace({ name, messages }: LastPlaceProps) {
+export function LastPlace({ name, messages, callback }: LastPlaceProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -51,6 +53,8 @@ export function LastPlace({ name, messages }: LastPlaceProps) {
       ctx.fillStyle = "#FFFFFF";
       ctx.textAlign = "center";
       ctx.fillText(messages.toString(), canvas.width / 2, canvas.height - 320);
+
+      callback(canvas.toDataURL("image/png"));
     }
 
     return () => {
@@ -59,9 +63,8 @@ export function LastPlace({ name, messages }: LastPlaceProps) {
   }, [name, messages]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-[70%] mt-8 h-full rounded-4xl object-contain mx-auto"
-    />
+    <div className="w-[70%] mt-8 h-full rounded-4xl mx-auto">
+      <canvas ref={canvasRef} className="w-full h-full object-contain" />
+    </div>
   );
 }
