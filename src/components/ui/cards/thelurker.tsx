@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import personality from "@/assets/cards/personality.png";
-import thegrandma from "@/assets/cards/thegrandma.png";
+import thelurker from "@/assets/cards/thelurker.png";
 
-interface TheGrandmaProps {
+interface TheLurkerProps {
   name: string;
   messagesSent: number;
 }
 
-export function TheGrandma({ name, messagesSent }: TheGrandmaProps) {
+export function TheLurker({ name, messagesSent }: TheLurkerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export function TheGrandma({ name, messagesSent }: TheGrandmaProps) {
       const coreImg = new Image();
 
       personalityImg.src = personality;
-      coreImg.src = thegrandma;
+      coreImg.src = thelurker;
 
       let f = new FontFace("Abhaya Libre", "url(/abhaya.ttf)");
       let f1 = new FontFace("Caveat", "url(/caveat.ttf)");
@@ -71,7 +71,7 @@ export function TheGrandma({ name, messagesSent }: TheGrandmaProps) {
       ctx.fillStyle = "#323233";
       ctx.textAlign = "center";
       ctx.fillText(
-        "Stickers Sent: " + messagesSent.toString(),
+        "Messages sent: " + messagesSent.toString(),
         canvas.width / 2,
         1200,
       );
@@ -82,7 +82,7 @@ export function TheGrandma({ name, messagesSent }: TheGrandmaProps) {
 
       // Text to display
       const text =
-        "Chat legend who finishes every line with a sticker encore. Has an endless pack for every mood from glitter hearts to grumpy cats.";
+        "The ghost in the group. Reads every ping in real-time but resurfaces once a month with a lone 👀 or “lol,” then melts back into the shadows. If the chat were a movie, they’re the silent viewer crunching popcorn while everyone else performs.";
 
       // Function to wrap text
       function wrapText(
@@ -124,7 +124,7 @@ export function TheGrandma({ name, messagesSent }: TheGrandmaProps) {
         ctx,
         text,
         canvas.width / 2,
-        canvas.height - 420,
+        canvas.height - 475,
         canvas.width - 220,
         40,
       );

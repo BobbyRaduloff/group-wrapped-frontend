@@ -25,79 +25,93 @@ export function Emojis({
   useEffect(() => {
     renderCanvas();
 
-    function renderCanvas() {
+    async function renderCanvas() {
       const canvas = canvasRef.current;
       if (!canvas) return;
 
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
-      const backgroundImage = new Image();
-      backgroundImage.src = emojis;
+      let f = new FontFace("Abhaya Libre", "url(/abhaya.ttf)");
+      let f1 = new FontFace("Afacad", "url(/afacad.ttf)");
+      const img = new Image();
+      img.src = emojis;
 
-      backgroundImage.onload = () => {
-        // Set canvas dimensions based on background image
-        const displayWidth = backgroundImage.width;
-        const displayHeight = backgroundImage.height;
+      await Promise.all([
+        f.load(),
+        f1.load(),
+        new Promise((resolve) => (img.onload = resolve)),
+      ]);
+      document.fonts.add(f);
+      document.fonts.add(f1);
 
-        // Set high DPI canvas
-        const dpr = window.devicePixelRatio || 1;
-        canvas.width = displayWidth * dpr;
-        canvas.height = displayHeight * dpr;
+      // Set canvas dimensions based on background image
+      const displayWidth = img.width;
+      const displayHeight = img.height;
 
-        // Scale context
-        ctx.scale(dpr, dpr);
+      // Set high DPI canvas
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = displayWidth * dpr;
+      canvas.height = displayHeight * dpr;
 
-        // Draw background image
-        ctx.drawImage(backgroundImage, 0, 0, displayWidth, displayHeight);
+      // Scale context
+      ctx.scale(dpr, dpr);
 
-        // Render emoji with SVG-like scaling, using default if empty
+      // Draw background image
+      ctx.drawImage(img, 0, 0, displayWidth, displayHeight);
+
+      // Set font with fallback options (light weight)
+      ctx.font = "bold 52px  'Afacad', sans-serif";
+      ctx.fillStyle = "#ffffff";
+      ctx.textAlign = "center";
+      ctx.fillText("WhatsWrapped.me", displayWidth / 2, 120);
+
+      // Render emoji with SVG-like scaling, using default if empty
+      renderEmojiAsVector(
+        ctx,
+        emojiOne || DEFAULT_EMOJI,
+        displayWidth / 2,
+        850,
+        240,
+      );
+
+      // Settings for text rendering
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "center";
+      ctx.font = `bold 64px "Abhaya Libre", sans-serif`;
+
+      ctx.fillStyle = "#323233";
+      ctx.fillText(`${emojiOneN} Times`, 450, 1130);
+
+      // Add the other emojis if they're used
+      if (emojiTwo) {
         renderEmojiAsVector(
           ctx,
-          emojiOne || DEFAULT_EMOJI,
-          displayWidth / 2,
-          850,
-          240
+          emojiTwo || DEFAULT_EMOJI,
+          displayWidth / 2 - 200,
+          1500,
+          180,
         );
 
-        // Settings for text rendering
-        ctx.textBaseline = "middle";
-        ctx.textAlign = "center";
-        ctx.font = `bold 64px 'Abhaya Libre', sans-serif`;
-
+        ctx.font = `bold 48px "Abhaya Libre", sans-serif`;
         ctx.fillStyle = "#323233";
-        ctx.fillText(`${emojiOneN} Times`, 450, 1130);
+        ctx.fillText(`${emojiTwoN} Times`, 240, 1680);
+      }
 
-        // Add the other emojis if they're used
-        if (emojiTwo) {
-          renderEmojiAsVector(
-            ctx,
-            emojiTwo || DEFAULT_EMOJI,
-            displayWidth / 2 - 200,
-            1500,
-            180
-          );
+      if (emojiThree) {
+        renderEmojiAsVector(
+          ctx,
+          emojiThree || DEFAULT_EMOJI,
+          displayWidth / 2 + 200,
+          1500,
+          180,
+        );
 
-          ctx.font = `bold 48px 'Abhaya Libre', sans-serif`;
-          ctx.fillStyle = "#323233";
-          ctx.fillText(`${emojiTwoN} Times`, 240, 1680);
-        }
-
-        if (emojiThree) {
-          renderEmojiAsVector(
-            ctx,
-            emojiThree || DEFAULT_EMOJI,
-            displayWidth / 2 + 200,
-            1500,
-            180
-          );
-
-          // If emoji count is provided, render it
-          ctx.font = `bold 48px 'Abhaya Libre', sans-serif`;
-          ctx.fillStyle = "#323233";
-          ctx.fillText(`${emojiThreeN} Times`, 640, 1680);
-        }
-      };
+        // If emoji count is provided, render it
+        ctx.font = `bold 48px "Abhaya Libre", sans-serif`;
+        ctx.fillStyle = "#323233";
+        ctx.fillText(`${emojiThreeN} Times`, 640, 1680);
+      }
     }
 
     function renderEmojiAsVector(
@@ -105,7 +119,7 @@ export function Emojis({
       emoji: string,
       x: number,
       y: number,
-      fontSize: number
+      fontSize: number,
     ) {
       // Create a temporary canvas for the emoji
       const emojiCanvas = document.createElement("canvas");
@@ -143,13 +157,9 @@ export function Emojis({
         x - emojiSize / 2,
         y - emojiSize / 2,
         emojiSize,
-        emojiSize
+        emojiSize,
       );
     }
-
-    return () => {
-      // No cleanup needed
-    };
   }, [emojiOne, emojiTwo, emojiThree, emojiOneN, emojiTwoN, emojiThreeN]);
 
   return (

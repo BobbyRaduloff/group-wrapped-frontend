@@ -14,6 +14,7 @@ import { TheBasicBiatch } from "@/components/ui/cards/thebasicbiatch";
 import { TimCheese } from "@/components/ui/cards/timcheese";
 import { Duo } from "@/components/ui/cards/duo";
 import { useEffect, useState } from "react";
+import { TheLurker } from "@/components/ui/cards/thelurker";
 
 export const Route = createFileRoute("/results")({
   component: RouteComponent,
@@ -98,15 +99,20 @@ function RouteComponent() {
       id: "thespammer",
       content: <TheSpammer name="Robert Tan" messagesSent={4090} />,
     },
+    {
+      id: "thelurker",
+      content: <TheLurker name="Alex Radulov" messagesSent={300} />,
+    },
   ];
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-start lg:justify-center p-8 py-8 select-none">
       <div
-        className={`h-[50%] lg:h-auto lg:w-1/4 transition-opacity duration-700 ease-in-out ${isLoaded ? "opacity-100" : "opacity-0"}`}
+        className={`h-[50%] lg:h-auto lg:w-1/4 mt-8 transition-opacity duration-700 ease-in-out ${isLoaded ? "opacity-100" : "opacity-0"}`}
       >
         <StoryControls stories={storyItems} />
       </div>
+
       <Link
         to="/"
         className={`hidden lg:flex flex-row items-center absolute top-4 left-4 transition-opacity duration-700 ease-in-out ${isLoaded ? "opacity-100" : "opacity-0"}`}

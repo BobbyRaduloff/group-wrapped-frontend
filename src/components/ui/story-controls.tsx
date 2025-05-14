@@ -25,7 +25,7 @@ export function StoryControls({
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState<number[]>(
-    stories.map((_, i) => (i < initialIndex ? 100 : 0))
+    stories.map((_, i) => (i < initialIndex ? 100 : 0)),
   );
   const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -36,7 +36,7 @@ export function StoryControls({
     if (currentIndex < stories.length - 1) {
       // Reset progress for the current story
       const newProgress = [...progress];
-      newProgress[currentIndex] = 0;
+      newProgress[currentIndex] = 100;
       setProgress(newProgress);
 
       setCurrentIndex(currentIndex + 1);
@@ -45,9 +45,9 @@ export function StoryControls({
     } else if (onComplete) {
       onComplete();
     } else {
-      const newProgress = [...progress];
-      newProgress[currentIndex] = 0;
-      setProgress(newProgress);
+      // Reset everything when wrapping
+      const resetProgress = new Array(stories.length).fill(0);
+      setProgress(resetProgress);
       setCurrentIndex(0);
       setPaused(false);
       setStartTime(null);
@@ -59,7 +59,9 @@ export function StoryControls({
     if (currentIndex > 0) {
       // Reset progress for the current story
       const newProgress = [...progress];
-      newProgress[currentIndex] = 0;
+      for (let i = currentIndex; i < newProgress.length; i++) {
+        newProgress[i] = 0; // Clear progress for current and future stories
+      }
       setProgress(newProgress);
 
       setCurrentIndex(currentIndex - 1);
@@ -74,7 +76,7 @@ export function StoryControls({
 
   // Handle progress animation
   useEffect(() => {
-    if (paused) return;
+    if (paused || currentIndex === stories.length - 1) return;
 
     let animationFrameId: number;
 
@@ -127,7 +129,7 @@ export function StoryControls({
 
   const handleTouchEnd = (
     e: React.TouchEvent,
-    goToStory: (() => void) | null = null
+    goToStory: (() => void) | null = null,
   ) => {
     e.preventDefault(); // Prevent default selection behavior
     handleResume();
@@ -187,7 +189,7 @@ export function StoryControls({
                 new File(
                   [await (await fetch(imageUrl)).blob()],
                   "whatswrapped-story.png",
-                  { type: "image/png" }
+                  { type: "image/png" },
                 ),
               ],
             })
@@ -212,7 +214,7 @@ export function StoryControls({
         }
       } else {
         console.log(
-          "No image URL available for sharing and couldn't capture screenshot"
+          "No image URL available for sharing and couldn't capture screenshot",
         );
       }
     } catch (error) {
@@ -221,7 +223,7 @@ export function StoryControls({
   };
 
   return (
-    <div className={`w-full h-full relative overflow-hidden ${className}`}>
+    <div className={`w-full h-full ${className}`}>
       {/* Story content */}
       <div
         ref={storyContentRef}
@@ -244,7 +246,7 @@ export function StoryControls({
         {stories.map((story, index) => (
           <div
             key={story.id}
-            className={`${index === currentIndex ? "block" : "hidden"} h-full`}
+            className={`${index === currentIndex ? "block" : "hidden"}`}
           >
             {story.content}
           </div>
@@ -252,7 +254,7 @@ export function StoryControls({
       </div>
 
       {/* Story indicators */}
-      <div className="absolute top-12 left-0 right-0 flex justify-center gap-2 px-8 z-0">
+      <div className="absolute top-6 left-0 right-0 flex justify-center gap-2 px-8 z-0">
         {stories.map((_, index) => (
           <div
             key={index}
@@ -273,12 +275,20 @@ export function StoryControls({
       </div>
 
       {/* Instagram Share Button */}
-      <div className="absolute bottom-2 left-0 right-0 flex justify-center z-10">
+
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-4 z-10">
+        <button
+          onClick={() => {}}
+          className="bg-gray-800 text-white px-12 py-2 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
+        >
+          <span className="font-bold text-white">Another Chat</span>
+        </button>
+
         <button
           onClick={shareToInstagram}
-          className="bg-gradient-to-br from-[#956A75] text-white px-16 py-4 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
+          className="bg-[#ca9541] text-white px-12 py-2 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
         >
-          <span className="font-bold text-white text-xl">Share</span>
+          <span className="font-bold text-white">Share</span>
         </button>
       </div>
 
