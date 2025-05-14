@@ -33,14 +33,10 @@ function RouteComponent() {
     }
   }, [result, navigate]);
 
-  const parsed = useMemo(
-    () => (result ? (JSON.parse(result) as WrappedData) : null),
-    [result],
-  );
-
   const [urls, setURLS] = useState<Record<string, string>>({});
 
   const calculated = useMemo(() => {
+    const parsed = result ? (JSON.parse(result) as WrappedData) : null;
     if (!parsed) return [];
 
     const storyItems: StoryItem[] = [
@@ -166,7 +162,7 @@ function RouteComponent() {
     }
 
     return storyItems;
-  }, [parsed]);
+  }, [result]);
 
   return (
     <div className="w-full h-[90vh] flex flex-col items-center justify-start lg:justify-center p-8 py-2 select-none">
