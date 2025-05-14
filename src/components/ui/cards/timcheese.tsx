@@ -124,7 +124,7 @@ export function TimCheese({ name, messagesSent }: TimCheeseProps) {
   return (
     <canvas
       ref={canvasRef}
-      className="w-[80%] mt-8 h-full rounded-4xl object-contain mx-auto"
+      className="w-[70%] mt-8 h-full rounded-4xl object-contain mx-auto"
     />
   );
 }
