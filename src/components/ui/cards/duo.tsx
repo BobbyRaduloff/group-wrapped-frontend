@@ -61,7 +61,7 @@ export function Duo({ totalConversations, nameOne, nameTwo }: DuoProps) {
   return (
     <canvas
       ref={canvasRef}
-      className="w-full h-full rounded-4xl object-contain"
+      className="w-[80%] mt-8 h-full rounded-4xl object-contain mx-auto"
     />
   );
 }

@@ -147,7 +147,7 @@ function RouteComponent() {
   }, [parsed]);
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-start lg:justify-center p-8 py-8 select-none">
+    <div className="w-full h-[90vh] flex flex-col items-center justify-start lg:justify-center p-8 py-2 select-none">
       <div
         className={`h-[50%] lg:h-auto lg:w-1/4 mt-8 transition-opacity duration-700 ease-in-out opacity-100`}
       >
