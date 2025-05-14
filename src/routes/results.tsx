@@ -13,10 +13,12 @@ import { TheBot } from "@/components/ui/cards/thebot";
 import { TheBasicBiatch } from "@/components/ui/cards/thebasicbiatch";
 import { TimCheese } from "@/components/ui/cards/timcheese";
 import { Duo } from "@/components/ui/cards/duo";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { TheLurker } from "@/components/ui/cards/thelurker";
 import { z } from "zod";
 import { WrappedData } from "@/types/results";
+import { LoadingContext } from "@/contexts/loading";
+import LoadingComponent from "@/components/loading";
 
 export const Route = createFileRoute("/results")({
   component: RouteComponent,
@@ -27,8 +29,11 @@ function RouteComponent() {
   const { result } = Route.useSearch();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useContext(LoadingContext);
+
   useEffect(() => {
     if (!result) {
+      setLoading(false);
       navigate({ to: "/" });
     }
   }, [result, navigate]);
@@ -122,17 +127,23 @@ function RouteComponent() {
       ),
     });
 
-    storyItems.push({
-      id: "duo",
-      content: (
-        <Duo
-          nameOne={parsed.statistics.couple.personOne.substring(0, 15)}
-          nameTwo={parsed.statistics.couple.personTwo.substring(0, 15)}
-          totalConversations={parsed.statistics.couple.count}
-          callback={(s) => setURLS((prev) => ({ ...prev, duo: s }))}
-        />
-      ),
-    });
+    if (
+      parsed.statistics.couple.personOne &&
+      parsed.statistics.couple.personTwo &&
+      parsed.statistics.couple.count
+    ) {
+      storyItems.push({
+        id: "duo",
+        content: (
+          <Duo
+            nameOne={parsed.statistics.couple.personOne.substring(0, 15)}
+            nameTwo={parsed.statistics.couple.personTwo.substring(0, 15)}
+            totalConversations={parsed.statistics.couple.count}
+            callback={(s) => setURLS((prev) => ({ ...prev, duo: s }))}
+          />
+        ),
+      });
+    }
 
     for (const c of parsed.cards) {
       const n = c.person.substring(0, 15);
@@ -166,6 +177,7 @@ function RouteComponent() {
 
   return (
     <div className="w-full h-[90vh] flex flex-col items-center justify-start lg:justify-center p-8 py-2 select-none">
+      {loading && <LoadingComponent />}
       <div
         className={`h-[100%] lg:h-auto lg:w-1/4 mt-8 transition-opacity duration-700 ease-in-out opacity-100`}
       >

@@ -58,7 +58,7 @@ export default function LoadingComponent() {
   }, [funnyMessages, navigate]);
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-b from-background to-[#c0cfb2]">
+    <div className="absolute z-[9999999999] w-full min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-b from-background to-[#c0cfb2]">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

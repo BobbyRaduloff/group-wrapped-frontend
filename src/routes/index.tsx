@@ -4,6 +4,8 @@ import { VideoPlayer } from "../components/ui/video-player";
 import { TimelineSteps } from "../components/ui/timeline-steps";
 import CookieConsent from "react-cookie-consent";
 import { useMutation } from "@tanstack/react-query";
+import { useContext } from "react";
+import { LoadingContext } from "@/contexts/loading";
 import LoadingComponent from "@/components/loading";
 
 export const Route = createFileRoute("/")({
@@ -12,8 +14,9 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useContext(LoadingContext);
 
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, error } = useMutation({
     mutationFn: async (file: File) => {
       try {
         const f = new FormData();
@@ -38,12 +41,11 @@ function Index() {
   });
 
   const handleFileSelect = (file: File) => {
+    setLoading(true);
     mutate(file);
   };
 
-  if (isPending) {
-    return <LoadingComponent />;
-  }
+  if (loading) return <LoadingComponent />;
 
   return (
     <div className="w-screen overflow-x-hiddn min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none">

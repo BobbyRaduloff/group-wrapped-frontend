@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import welcome from "@/assets/cards/welcome.png";
+import { LoadingContext } from "@/contexts/loading";
 
 export interface Props {
   callback: (_arg0: string) => void;
@@ -7,6 +8,8 @@ export interface Props {
 
 export function Welcome({ callback }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const [, setLoading] = useContext(LoadingContext);
 
   useEffect(() => {
     // Render canvas when component mounts
@@ -40,6 +43,8 @@ export function Welcome({ callback }: Props) {
       ctx.fillText("WhatsWrapped.me", canvas.width / 2, 120);
 
       callback(canvas.toDataURL("image/png"));
+
+      setLoading(false);
     }
   }, []);
 
