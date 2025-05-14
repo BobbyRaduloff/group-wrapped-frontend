@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import html2canvas from "html2canvas";
+import { useNavigate } from "@tanstack/react-router";
 
 export interface StoryItem {
   content: React.ReactNode;
@@ -22,6 +23,7 @@ export function StoryControls({
   onComplete,
   className = "",
 }: StoryControlsProps) {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState<number[]>(
@@ -278,7 +280,9 @@ export function StoryControls({
 
       <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-4 z-10">
         <button
-          onClick={() => {}}
+          onClick={() => {
+            navigate({ to: "/" });
+          }}
           className="bg-gray-800 text-white px-12 py-2 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
         >
           <span className="font-bold text-white">Another Chat</span>

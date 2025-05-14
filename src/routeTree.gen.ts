@@ -13,7 +13,6 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as TacImport } from './routes/tac'
 import { Route as ResultsImport } from './routes/results'
-import { Route as LoadingImport } from './routes/loading'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -27,12 +26,6 @@ const TacRoute = TacImport.update({
 const ResultsRoute = ResultsImport.update({
   id: '/results',
   path: '/results',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LoadingRoute = LoadingImport.update({
-  id: '/loading',
-  path: '/loading',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -51,13 +44,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/loading': {
-      id: '/loading'
-      path: '/loading'
-      fullPath: '/loading'
-      preLoaderRoute: typeof LoadingImport
       parentRoute: typeof rootRoute
     }
     '/results': {
@@ -81,14 +67,12 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/loading': typeof LoadingRoute
   '/results': typeof ResultsRoute
   '/tac': typeof TacRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/loading': typeof LoadingRoute
   '/results': typeof ResultsRoute
   '/tac': typeof TacRoute
 }
@@ -96,30 +80,27 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/loading': typeof LoadingRoute
   '/results': typeof ResultsRoute
   '/tac': typeof TacRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/loading' | '/results' | '/tac'
+  fullPaths: '/' | '/results' | '/tac'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/loading' | '/results' | '/tac'
-  id: '__root__' | '/' | '/loading' | '/results' | '/tac'
+  to: '/' | '/results' | '/tac'
+  id: '__root__' | '/' | '/results' | '/tac'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LoadingRoute: typeof LoadingRoute
   ResultsRoute: typeof ResultsRoute
   TacRoute: typeof TacRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LoadingRoute: LoadingRoute,
   ResultsRoute: ResultsRoute,
   TacRoute: TacRoute,
 }
@@ -135,16 +116,12 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/loading",
         "/results",
         "/tac"
       ]
     },
     "/": {
       "filePath": "index.tsx"
-    },
-    "/loading": {
-      "filePath": "loading.tsx"
     },
     "/results": {
       "filePath": "results.tsx"

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { StoryControls, StoryItem } from "@/components/ui/story-controls";
 import { TheCore } from "@/components/ui/cards/thecore";
 import { Messages } from "@/components/ui/cards/messages";
@@ -13,109 +13,150 @@ import { TheBot } from "@/components/ui/cards/thebot";
 import { TheBasicBiatch } from "@/components/ui/cards/thebasicbiatch";
 import { TimCheese } from "@/components/ui/cards/timcheese";
 import { Duo } from "@/components/ui/cards/duo";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { TheLurker } from "@/components/ui/cards/thelurker";
+import { z } from "zod";
+import { WrappedData } from "@/types/results";
 
 export const Route = createFileRoute("/results")({
   component: RouteComponent,
+  validateSearch: z.object({ result: z.string() }),
 });
 
 function RouteComponent() {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const { result } = Route.useSearch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+    if (!result) {
+      navigate({ to: "/" });
+    }
+  }, [result, navigate]);
 
-  const storyItems: StoryItem[] = [
-    {
-      id: "welcome",
-      content: <Welcome />,
-    },
-    {
+  const parsed = useMemo(
+    () => (result ? (JSON.parse(result) as WrappedData) : null),
+    [result],
+  );
+
+  const calculated = useMemo(() => {
+    if (!parsed) return [];
+
+    const storyItems: StoryItem[] = [
+      {
+        id: "welcome",
+        content: <Welcome />,
+      },
+    ];
+
+    const m1 =
+      parsed.statistics.messagesPerPerson.length > 0
+        ? parsed.statistics.messagesPerPerson[0]
+        : { sender: "N/A", count: 0 };
+    const m2 =
+      parsed.statistics.messagesPerPerson.length > 1
+        ? parsed.statistics.messagesPerPerson[1]
+        : { sender: "N/A", count: 0 };
+    const m3 =
+      parsed.statistics.messagesPerPerson.length > 2
+        ? parsed.statistics.messagesPerPerson[2]
+        : { sender: "N/A", count: 0 };
+    storyItems.push({
       id: "messages",
       content: (
         <Messages
-          nameOne="Robert Tan"
-          nameTwo="Boris"
-          nameThree="Arkadiy"
-          messagesOne={600}
-          messagesTwo={250}
-          messagesThree={100}
-          totalMessages={1000}
+          totalMessages={parsed.statistics.totalMessages}
+          nameOne={m1.sender.substring(0, 15)}
+          messagesOne={m1.count}
+          nameTwo={m2.sender.substring(0, 15)}
+          messagesTwo={m2.count}
+          nameThree={m3.sender.substring(0, 15)}
+          messagesThree={m3.count}
         />
       ),
-    },
-    {
-      id: "lastplace",
-      content: <LastPlace name="Alexander Radulov" messages={10} />,
-    },
-    {
+    });
+
+    if (parsed.statistics.messagesPerPerson.length > 3) {
+      const guy =
+        parsed.statistics.messagesPerPerson[
+          parsed.statistics.messagesPerPerson.length - 1
+        ];
+      storyItems.push({
+        id: "lastplace",
+        content: (
+          <LastPlace name={guy.sender.substring(0, 15)} messages={guy.count} />
+        ),
+      });
+    }
+
+    const e1 =
+      parsed.statistics.top3emojis.length > 0
+        ? parsed.statistics.top3emojis[0]
+        : { emoji: "N/A", count: 0 };
+    const e2 =
+      parsed.statistics.top3emojis.length > 1
+        ? parsed.statistics.top3emojis[1]
+        : { emoji: "N/A", count: 0 };
+    const e3 =
+      parsed.statistics.top3emojis.length > 2
+        ? parsed.statistics.top3emojis[2]
+        : { emoji: "N/A", count: 0 };
+    storyItems.push({
       id: "emojis",
       content: (
         <Emojis
-          emojiOne="💀"
-          emojiOneN={669}
-          emojiTwo="🍑"
-          emojiTwoN={420}
-          emojiThree="💄"
-          emojiThreeN={120}
+          emojiOne={e1.emoji}
+          emojiOneN={e1.count}
+          emojiTwo={e2.emoji}
+          emojiTwoN={e2.count}
+          emojiThree={e3.emoji}
+          emojiThreeN={e3.count}
         />
       ),
-    },
-    {
+    });
+
+    storyItems.push({
       id: "duo",
-      content: <Duo nameOne="Boris" nameTwo="Albert" totalConversations={10} />,
-    },
-    {
-      id: "timcheese",
-      content: <TimCheese name="Robert Tan" messagesSent={100} />,
-    },
-    {
-      id: "thebasicbiatch",
-      content: <TheBasicBiatch name="Roberta Tan" messagesSent={100} />,
-    },
-    {
-      id: "thebot",
-      content: <TheBot name="Robert Tan" messagesSent={100} />,
-    },
-    {
-      id: "thegrandma",
-      content: <TheGrandma name="Robert Tan" messagesSent={100} />,
-    },
-    {
-      id: "theopener",
-      content: <TheOpener name="Robert Tan" messagesSent={4090} />,
-    },
-    {
-      id: "thecore",
-      content: <TheCore name="Robert Tan" messagesSent={4090} />,
-    },
-    {
-      id: "thejester",
-      content: <TheJester name="Robert Tan" messagesSent={4090} />,
-    },
-    {
-      id: "thespammer",
-      content: <TheSpammer name="Robert Tan" messagesSent={4090} />,
-    },
-    {
-      id: "thelurker",
-      content: <TheLurker name="Alex Radulov" messagesSent={300} />,
-    },
-  ];
+      content: (
+        <Duo
+          nameOne={parsed.statistics.couple.personOne.substring(0, 15)}
+          nameTwo={parsed.statistics.couple.personTwo.substring(0, 15)}
+          totalConversations={parsed.statistics.couple.count}
+        />
+      ),
+    });
+
+    for (const c of parsed.cards) {
+      const n = c.person.substring(0, 15);
+      const m = c.value;
+      const mp = {
+        TIMCHEESE: TimCheese,
+        BASICBITCH: TheBasicBiatch,
+        LURKER: TheLurker,
+        BOT: TheBot,
+        SPAMMER: TheSpammer,
+        GRANDMA: TheGrandma,
+        OPENER: TheOpener,
+        CORE: TheCore,
+        JESTER: TheJester,
+      } as const;
+      const F = mp[c.type];
+      storyItems.push({ id: c.type, content: <F name={n} messagesSent={m} /> });
+    }
+
+    return storyItems;
+  }, [parsed]);
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-start lg:justify-center p-8 py-8 select-none">
       <div
-        className={`h-[50%] lg:h-auto lg:w-1/4 mt-8 transition-opacity duration-700 ease-in-out ${isLoaded ? "opacity-100" : "opacity-0"}`}
+        className={`h-[50%] lg:h-auto lg:w-1/4 mt-8 transition-opacity duration-700 ease-in-out opacity-100`}
       >
-        <StoryControls stories={storyItems} />
+        <StoryControls stories={calculated} />
       </div>
 
       <Link
         to="/"
-        className={`hidden lg:flex flex-row items-center absolute top-4 left-4 transition-opacity duration-700 ease-in-out ${isLoaded ? "opacity-100" : "opacity-0"}`}
+        className={`hidden lg:flex flex-row items-center absolute top-4 left-4 transition-opacity duration-700 ease-in-out opacity-100`}
       >
         <img src="/logo.webp" className="w-24" />
         <h1 className="text-4xl md:text-5xl font-bold text-white">

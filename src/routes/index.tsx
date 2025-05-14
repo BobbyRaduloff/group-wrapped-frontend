@@ -1,27 +1,49 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { FileDropZone } from "../components/ui/file-drop-zone";
 import { VideoPlayer } from "../components/ui/video-player";
-import { useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
 import { TimelineSteps } from "../components/ui/timeline-steps";
 import CookieConsent from "react-cookie-consent";
+import { useMutation } from "@tanstack/react-query";
+import LoadingComponent from "@/components/loading";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
 function Index() {
-  const [_, setSelectedFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: async (file: File) => {
+      try {
+        const f = new FormData();
+        f.append("file", file);
+        const res = await fetch("https://api.whatswrapped.me", {
+          method: "POST",
+          body: f,
+        });
+        if (!res.ok) {
+          const err = await res.text();
+          throw new Error(err);
+        }
+
+        return await res.json();
+      } catch (e) {
+        throw new Error((e as Error).message);
+      }
+    },
+    onSuccess: (data) => {
+      navigate({ to: "/results", search: { result: JSON.stringify(data) } });
+    },
+  });
+
   const handleFileSelect = (file: File) => {
-    setSelectedFile(file);
-    handleContinue();
+    mutate(file);
   };
 
-  const handleContinue = () => {
-    navigate({ to: "/loading" });
-  };
+  if (isPending) {
+    return <LoadingComponent />;
+  }
 
   return (
     <div className="w-screen overflow-x-hiddn min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none">
@@ -40,6 +62,7 @@ function Index() {
           onFileSelect={handleFileSelect}
           acceptedFileTypes={[".txt", ".zip"]}
         />
+        {error && <div className="text-red-400">{error.message}</div>}
       </div>
 
       <div className="w-full mt-16 max-w-5xl mx-auto">

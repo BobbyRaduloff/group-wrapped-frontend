@@ -1,12 +1,8 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef, useMemo } from "react";
 
-export const Route = createFileRoute("/loading")({
-  component: LoadingComponent,
-});
-
-function LoadingComponent() {
+export default function LoadingComponent() {
   const [loadingMessage, setLoadingMessage] = useState("");
   const availableMessagesRef = useRef<string[]>([]);
   const navigate = useNavigate();
@@ -28,7 +24,7 @@ function LoadingComponent() {
       "Analyzing who actually carries this group chat (it's not you)",
       "Detecting every time you said 'no offense' before being offensive",
     ],
-    []
+    [],
   );
 
   useEffect(() => {
@@ -40,12 +36,12 @@ function LoadingComponent() {
       }
 
       const randomIndex = Math.floor(
-        Math.random() * availableMessagesRef.current.length
+        Math.random() * availableMessagesRef.current.length,
       );
 
       const selectedMessage = availableMessagesRef.current.splice(
         randomIndex,
-        1
+        1,
       )[0];
       return selectedMessage;
     };
@@ -56,13 +52,8 @@ function LoadingComponent() {
       setLoadingMessage(getNextRandomMessage());
     }, 3000);
 
-    const redirectTimeoutId = setTimeout(() => {
-      navigate({ to: "/results" });
-    }, 5000);
-
     return () => {
       clearInterval(messageIntervalId);
-      clearTimeout(redirectTimeoutId);
     };
   }, [funnyMessages, navigate]);
 
