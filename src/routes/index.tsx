@@ -38,6 +38,9 @@ function Index() {
     onSuccess: (data) => {
       navigate({ to: "/results", search: { result: JSON.stringify(data) } });
     },
+    onError: () => {
+      setLoading(false);
+    },
   });
 
   const handleFileSelect = (file: File) => {
@@ -45,7 +48,7 @@ function Index() {
     mutate(file);
   };
 
-  if (loading) return <LoadingComponent />;
+  if (loading && !error) return <LoadingComponent />;
 
   return (
     <div className="w-screen overflow-x-hiddn min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none">

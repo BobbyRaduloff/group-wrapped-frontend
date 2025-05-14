@@ -100,32 +100,34 @@ function RouteComponent() {
       });
     }
 
-    const e1 =
-      parsed.statistics.top3emojis.length > 0
-        ? parsed.statistics.top3emojis[0]
-        : { emoji: "N/A", count: 0 };
-    const e2 =
-      parsed.statistics.top3emojis.length > 1
-        ? parsed.statistics.top3emojis[1]
-        : { emoji: "N/A", count: 0 };
-    const e3 =
-      parsed.statistics.top3emojis.length > 2
-        ? parsed.statistics.top3emojis[2]
-        : { emoji: "N/A", count: 0 };
-    storyItems.push({
-      id: "emojis",
-      content: (
-        <Emojis
-          emojiOne={e1.emoji}
-          emojiOneN={e1.count}
-          emojiTwo={e2.emoji}
-          emojiTwoN={e2.count}
-          emojiThree={e3.emoji}
-          emojiThreeN={e3.count}
-          callback={(s) => setURLS((prev) => ({ ...prev, emojis: s }))}
-        />
-      ),
-    });
+    if (parsed.statistics.top3emojis) {
+      const e1 =
+        parsed.statistics.top3emojis.length > 0
+          ? parsed.statistics.top3emojis[0]
+          : { emoji: "N/A", count: 0 };
+      const e2 =
+        parsed.statistics.top3emojis.length > 1
+          ? parsed.statistics.top3emojis[1]
+          : { emoji: "N/A", count: 0 };
+      const e3 =
+        parsed.statistics.top3emojis.length > 2
+          ? parsed.statistics.top3emojis[2]
+          : { emoji: "N/A", count: 0 };
+      storyItems.push({
+        id: "emojis",
+        content: (
+          <Emojis
+            emojiOne={e1.emoji}
+            emojiOneN={e1.count}
+            emojiTwo={e2.emoji}
+            emojiTwoN={e2.count}
+            emojiThree={e3.emoji}
+            emojiThreeN={e3.count}
+            callback={(s) => setURLS((prev) => ({ ...prev, emojis: s }))}
+          />
+        ),
+      });
+    }
 
     if (
       parsed.statistics.couple.personOne &&

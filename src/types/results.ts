@@ -34,7 +34,7 @@ export interface Card {
 export interface ChatStatistics {
   totalMessages: number;
   messagesPerPerson: PersonMessageStats[];
-  top3emojis: EmojiStats[];
+  top3emojis: EmojiStats[] | null;
   imagesPerPerson: PersonMessageStats[];
   videosPerPerson: PersonMessageStats[];
   AudioPerPerson: PersonMessageStats[];
