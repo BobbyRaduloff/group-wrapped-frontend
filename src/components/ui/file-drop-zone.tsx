@@ -118,6 +118,9 @@ export function FileDropZone({
                 : "Click to upload your WhatsApp chat file!"}
             </h3>
             <p className="mt-1 text-sm text-white/80">or drag and drop</p>
+            <p className="mt-1 text-sm text-orange-100">
+              WARNING: Currently only supports iOS devices.
+            </p>
           </div>
         </div>
 
