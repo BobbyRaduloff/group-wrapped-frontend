@@ -18,6 +18,8 @@ function Index() {
 
   const { mutate, error } = useMutation({
     mutationFn: async (file: File) => {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
       try {
         const f = new FormData();
         f.append("file", file);
