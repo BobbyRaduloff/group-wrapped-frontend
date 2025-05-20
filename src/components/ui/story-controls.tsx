@@ -28,7 +28,7 @@ export function StoryControls({
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState<number[]>(
-    stories.map((_, i) => (i < initialIndex ? 100 : 0)),
+    stories.map((_, i) => (i < initialIndex ? 100 : 0))
   );
   const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -131,7 +131,7 @@ export function StoryControls({
 
   const handleTouchEnd = (
     e: React.TouchEvent,
-    goToStory: (() => void) | null = null,
+    goToStory: (() => void) | null = null
   ) => {
     e.preventDefault(); // Prevent default selection behavior
     handleResume();
@@ -252,8 +252,9 @@ export function StoryControls({
 
         <button
           onClick={shareToInstagram}
-          className="bg-[#ca9541] text-white px-12 py-2 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
+          className="bg-[#ca9541] text-white px-12 py-2 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer gap-1"
         >
+          <img src="/share.svg" className="w-4 h-4" />
           <span className="font-bold text-white">Share</span>
         </button>
       </div>
