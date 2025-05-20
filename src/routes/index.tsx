@@ -105,7 +105,7 @@ function Index() {
           Did you know that you can export and share with friends? It’s super
           easy!!!
         </h3>
-        <img src="/share.png" className="w-full" />
+        <img src="/share.webp" className="w-full" />
       </div>
 
       <TimelineSteps />
@@ -125,17 +125,7 @@ function Index() {
         <br />
         All Rights Reserved.
       </p>
-      <CookieConsent
-        onAccept={() => {
-          // @ts-ignore
-          gtag("consent", "update", {
-            ad_storage: "granted",
-            ad_user_data: "granted",
-            ad_personalization: "granted",
-            analytics_storage: "granted",
-          });
-        }}
-      >
+      <CookieConsent>
         This website uses cookies to enhance the user experience. Learn more in
         our{" "}
         <Link to="/tac" className="underline">
