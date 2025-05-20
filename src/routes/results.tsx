@@ -178,7 +178,7 @@ function RouteComponent() {
   }, [result]);
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-start lg:justify-center p-8 py-2 select-none overflow-hidden">
+    <div className="w-full h-[90vh] flex flex-col items-center justify-start lg:justify-center p-8 py-2 select-none overflow-hidden">
       {loading && <LoadingComponent />}
       <div
         className={`h-[100%] md:w-[85%] 2xl:w-[35%] mt-8 transition-opacity duration-700 ease-in-out opacity-100 rounded-2xl`}

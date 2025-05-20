@@ -240,7 +240,7 @@ export function StoryControls({
 
       {/* Instagram Share Button */}
 
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-4 z-10">
+      <div className="absolute bottom-16 lg:bottom-6 left-0 right-0 flex justify-center gap-4 z-10">
         <button
           onClick={() => {
             navigate({ to: "/" });
@@ -254,7 +254,7 @@ export function StoryControls({
           onClick={shareToInstagram}
           className="bg-[#ca9541] text-white px-12 py-2 rounded-full flex items-center shadow-lg hover:opacity-90 transition-opacity hover:cursor-pointer gap-1"
         >
-          {/* <img src="/share.svg" className="w-4 h-4" /> */}
+          <img src="/share.svg" className="w-4 h-4" />
           <span className="font-bold text-white">Share</span>
         </button>
       </div>
