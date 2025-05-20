@@ -240,7 +240,7 @@ export function StoryControls({
 
       {/* Instagram Share Button */}
 
-      <div className="absolute bottom-16 lg:bottom-6 left-0 right-0 flex justify-center gap-4 z-10">
+      <div className="absolute bottom-8 lg:bottom-6 left-0 right-0 flex justify-center gap-4 z-10">
         <button
           onClick={() => {
             navigate({ to: "/" });
