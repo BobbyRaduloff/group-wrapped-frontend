@@ -55,7 +55,7 @@ function Index() {
   return (
     <div className="w-screen overflow-x-hiddn min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none gap-8 max-w-2xl mx-auto">
       <div className="flex flex-row items-center justify-center bg-[#D29039] border-2 rounded-xl border-[#FFE0B6] text-[#FFF0DD] p-2 w-full">
-        WOW!!! 398k chats uploaded
+        Chats Uploaded: <span className="text-green-100 ml-1">450,000</span>
       </div>
       <div className="flex flex-row gap-4 items-center justify-center mb-2">
         <img src="/logo.svg" className="w-12" />
