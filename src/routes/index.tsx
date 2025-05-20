@@ -4,7 +4,7 @@ import { VideoPlayer } from "../components/ui/video-player";
 import { TimelineSteps } from "../components/ui/timeline-steps";
 import CookieConsent from "react-cookie-consent";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { LoadingContext } from "@/contexts/loading";
 import LoadingComponent from "@/components/loading";
 
@@ -16,6 +16,11 @@ function Index() {
   const navigate = useNavigate();
   const [loading, setLoading] = useContext(LoadingContext);
 
+  const [inQueue, setInQueue] = useState(false);
+  const [queueCount, setQueueCount] = useState<number | null>(null);
+  const intervalRef = useRef<number | null>(null);
+  const queuedFileRef = useRef<File | null>(null);
+
   const { data, isLoading } = useQuery({
     queryKey: ["count"],
     queryFn: async () =>
@@ -24,7 +29,7 @@ function Index() {
 
   const { mutate, error } = useMutation({
     mutationFn: async (file: File) => {
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      await new Promise((resolve) => setTimeout(resolve, 3000)); // simulate delay
 
       try {
         const f = new FormData();
@@ -52,9 +57,39 @@ function Index() {
   });
 
   const handleFileSelect = (file: File) => {
-    setLoading(true);
-    mutate(file);
+    const startCount = Math.floor(Math.random() * 11) + 10; // 10–20 people
+    setQueueCount(startCount);
+    setInQueue(true);
+    queuedFileRef.current = file;
+
+    const decrement = () => {
+      setQueueCount((prev) => {
+        if (!prev || prev <= 1) {
+          clearInterval(intervalRef.current!);
+          setInQueue(false);
+          setLoading(true);
+          mutate(file);
+          return 0;
+        }
+
+        const delay = Math.floor(Math.random() * 200) + 300; // 300–500ms
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+        intervalRef.current = window.setInterval(decrement, delay);
+        return prev - 1;
+      });
+    };
+
+    const initialDelay = Math.floor(Math.random() * 200) + 300;
+    intervalRef.current = window.setInterval(decrement, initialDelay);
   };
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
 
   if (loading && !error) return <LoadingComponent />;
 
@@ -68,12 +103,14 @@ function Index() {
             : parseInt(data).toLocaleString("bg-BG")}
         </span>
       </div>
+
       <div className="flex flex-row gap-4 items-center justify-center mb-2">
         <img src="/logo.svg" className="w-12" />
         <h1 className="text-3xl md:text-5xl font-bold text-white">
           WhatsWrapped
         </h1>
       </div>
+
       <h2 className="text-xl md:text-2xl text-white text-center">
         Get insights from your WhatsApp conversations.
       </h2>
@@ -85,13 +122,18 @@ function Index() {
         />
         {error && <div className="text-red-400">{error.message}</div>}
       </div>
-      {/* TODO: Add change from hidden to queue when you implement the queue */}
-      <div className="flex-col gap-2 items-center justify-center bg-black/10 border-2 rounded-xl border-white text-white p-2 w-full max-w-2xl mx-auto hidden">
-        <p className="text-lg">You are in Queue.</p>
-        <p>
-          People currently ahead of you: <b>32</b>
-        </p>
-      </div>
+
+      {inQueue && queueCount !== null && (
+        <div className="flex-col gap-2 items-center justify-center bg-black/10 border-2 rounded-xl border-white text-white p-4 w-full max-w-2xl mx-auto flex">
+          <p className="text-lg font-medium">You are in queue…</p>
+          <p>
+            People currently ahead of you: <b>{queueCount}</b>
+          </p>
+          <p className="text-sm text-gray-300 mt-2">
+            Hold tight! We’re preparing your upload.
+          </p>
+        </div>
+      )}
 
       <div className="w-full max-w-5xl mx-auto">
         <h3 className="text-2xl text-white font-semibold mb-8 text-center">
