@@ -3,7 +3,7 @@ import { FileDropZone } from "../components/ui/file-drop-zone";
 import { VideoPlayer } from "../components/ui/video-player";
 import { TimelineSteps } from "../components/ui/timeline-steps";
 import CookieConsent from "react-cookie-consent";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { LoadingContext } from "@/contexts/loading";
 import LoadingComponent from "@/components/loading";
@@ -15,6 +15,12 @@ export const Route = createFileRoute("/")({
 function Index() {
   const navigate = useNavigate();
   const [loading, setLoading] = useContext(LoadingContext);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["count"],
+    queryFn: async () =>
+      await (await fetch("https://api.whatswrapped.me/chats")).text(),
+  });
 
   const { mutate, error } = useMutation({
     mutationFn: async (file: File) => {
@@ -55,7 +61,12 @@ function Index() {
   return (
     <div className="w-screen overflow-x-hiddn min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none gap-8 max-w-2xl mx-auto">
       <div className="flex flex-row items-center justify-center bg-[#D29039] border-2 rounded-xl border-[#FFE0B6] text-[#FFF0DD] p-2 w-full">
-        Chats Uploaded: <span className="text-green-100 ml-1">450,000</span>
+        Chats Uploaded:{" "}
+        <span className="text-green-100 ml-1">
+          {isLoading || !data
+            ? "450,000"
+            : parseInt(data).toLocaleString("bg-BG")}
+        </span>
       </div>
       <div className="flex flex-row gap-4 items-center justify-center mb-2">
         <img src="/logo.svg" className="w-12" />
