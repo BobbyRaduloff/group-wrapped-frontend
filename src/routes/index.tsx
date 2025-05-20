@@ -53,7 +53,7 @@ function Index() {
   if (loading && !error) return <LoadingComponent />;
 
   return (
-    <div className="w-screen overflow-x-hiddn min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none gap-8">
+    <div className="w-screen overflow-x-hiddn min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none gap-8 max-w-2xl mx-auto">
       <div className="flex flex-row items-center justify-center bg-[#D29039] border-2 rounded-xl border-[#FFE0B6] text-[#FFF0DD] p-2 w-full">
         WOW!!! 398k chats uploaded
       </div>
@@ -74,8 +74,8 @@ function Index() {
         />
         {error && <div className="text-red-400">{error.message}</div>}
       </div>
-
-      <div className="flex flex-col gap-2 items-center justify-center bg-black/10 border-2 rounded-xl border-white text-white p-2 w-full">
+      {/* TODO: Add change from hidden to queue when you implement the queue */}
+      <div className="flex-col gap-2 items-center justify-center bg-black/10 border-2 rounded-xl border-white text-white p-2 w-full max-w-2xl mx-auto hidden">
         <p className="text-lg">You are in Queue.</p>
         <p>
           People currently ahead of you: <b>32</b>
@@ -89,7 +89,7 @@ function Index() {
         <VideoPlayer src={"/demo.webm"} />
       </div>
 
-      <div className="flex flex-col gap-8 items-center">
+      <div className="flex flex-col gap-8 items-center max-w-sm mx-auto">
         <h3 className="text-2xl text-white font-semibold text-center">
           Did you know that you can export and share with friends? It’s super
           easy!!!

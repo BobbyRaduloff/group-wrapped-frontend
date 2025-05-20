@@ -70,7 +70,7 @@ export function FileDropZone({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-2xl mx-auto">
       <div
         onClick={handleClick}
         onDragOver={handleDragOver}
