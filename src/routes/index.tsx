@@ -53,18 +53,21 @@ function Index() {
   if (loading && !error) return <LoadingComponent />;
 
   return (
-    <div className="w-screen overflow-x-hiddn min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none">
-      <div className="flex flex-row gap-2 items-center justify-center mb-2">
-        <img src="/logo.webp" className="w-24" />
-        <h1 className="text-4xl md:text-5xl font-bold text-white">
+    <div className="w-screen overflow-x-hiddn min-h-screen flex flex-col items-center justify-start p-8 md:p-16 select-none gap-8">
+      <div className="flex flex-row items-center justify-center bg-[#D29039] border-2 rounded-xl border-[#FFE0B6] text-[#FFF0DD] p-2 w-full">
+        WOW!!! 398k chats uploaded
+      </div>
+      <div className="flex flex-row gap-4 items-center justify-center mb-2">
+        <img src="/logo.svg" className="w-12" />
+        <h1 className="text-3xl md:text-5xl font-bold text-white">
           WhatsWrapped
         </h1>
       </div>
-      <h2 className="text-xl md:text-2xl text-white mb-10 text-center">
+      <h2 className="text-xl md:text-2xl text-white text-center">
         Get insights from your WhatsApp conversations.
       </h2>
 
-      <div key="dropzone" className="w-full">
+      <div key="dropzone" className="w-full opacity-70">
         <FileDropZone
           onFileSelect={handleFileSelect}
           acceptedFileTypes={[".txt", ".zip"]}
@@ -72,16 +75,31 @@ function Index() {
         {error && <div className="text-red-400">{error.message}</div>}
       </div>
 
-      <div className="w-full mt-16 max-w-5xl mx-auto">
+      <div className="flex flex-col gap-2 items-center justify-center bg-black/10 border-2 rounded-xl border-white text-white p-2 w-full">
+        <p className="text-lg">You are in Queue.</p>
+        <p>
+          People currently ahead of you: <b>32</b>
+        </p>
+      </div>
+
+      <div className="w-full max-w-5xl mx-auto">
         <h3 className="text-2xl text-white font-semibold mb-8 text-center">
           How To Use WhatsWrapped
         </h3>
         <VideoPlayer src={"/demo.webm"} />
-
-        <TimelineSteps />
       </div>
 
-      <p className="mt-8 text-center">
+      <div className="flex flex-col gap-8 items-center">
+        <h3 className="text-2xl text-white font-semibold text-center">
+          Did you know that you can export and share with friends? It’s super
+          easy!!!
+        </h3>
+        <img src="/share.png" className="w-full" />
+      </div>
+
+      <TimelineSteps />
+
+      <p className="text-center">
         Contact us at{" "}
         <a className="underline" href="mailto:hello@whatswrapped.me">
           hello@whatswrapped.me

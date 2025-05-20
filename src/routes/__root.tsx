@@ -11,7 +11,7 @@ export const Route = createRootRoute({
     }, [loading]);
 
     return (
-      <div className="min-h-[100%] w-full bg-[url(/background.webp)] bg-cover cursor-default relative">
+      <div className="min-h-[100%] w-full bg-[url(/background.svg)] bg-cover cursor-default relative">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10">
           <LoadingContext value={[loading, setLoading]}>

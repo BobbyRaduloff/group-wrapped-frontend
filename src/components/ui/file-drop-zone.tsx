@@ -49,7 +49,7 @@ export function FileDropZone({
     const fileType = file.name.substring(file.name.lastIndexOf("."));
     if (acceptedFileTypes.length > 0 && !acceptedFileTypes.includes(fileType)) {
       setError(
-        `Invalid file type. Accepted types: ${acceptedFileTypes.join(", ")}`,
+        `Invalid file type. Accepted types: ${acceptedFileTypes.join(", ")}`
       );
       return;
     }
@@ -77,7 +77,7 @@ export function FileDropZone({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={`
-          relative flex flex-col items-center justify-center w-full p-10 
+          relative flex flex-col items-center justify-center w-full p-4
           border-2 border-dashed rounded-xl cursor-pointer
           transition-colors duration-300 ease-in-out
           bg-secondary/10 hover:bg-secondary/20
@@ -112,13 +112,13 @@ export function FileDropZone({
           </div>
 
           <div className="text-center">
-            <h3 className="text-lg font-medium text-white">
+            <h3 className="text-lg text-white">
               {isDragging
                 ? "Drop it!"
                 : "Click to upload your WhatsApp chat file!"}
             </h3>
-            <p className="mt-1 text-sm text-white/80">or drag and drop</p>
-            <p className="mt-1 text-sm text-green-100">
+            <p className="mt-2 text-sm text-white">or drag and drop</p>
+            <p className="mt-2 text-sm text-white">
               NEW: We now support Android exports too!
             </p>
           </div>
@@ -131,7 +131,7 @@ export function FileDropZone({
         )}
       </div>
 
-      <p className="mt-8 text-center w-full">
+      <p className="mt-8 text-lg text-center w-full">
         By uploading, you agree to our{" "}
         <Link to="/tac" className="underline">
           Terms and Conditions

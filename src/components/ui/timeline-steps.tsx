@@ -1,6 +1,6 @@
 export function TimelineSteps() {
   return (
-    <div className="mt-24 relative">
+    <div className="relative">
       {/* Timeline connector */}
       <div className="absolute left-6 md:left-1/2 top-0 bottom-36 lg:bottom-0 w-1 translate-x-1/2 z-0"></div>
 
