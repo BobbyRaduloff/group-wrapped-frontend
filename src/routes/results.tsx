@@ -178,23 +178,13 @@ function RouteComponent() {
   }, [result]);
 
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-start lg:justify-center p-8 py-2 select-none overflow-hidden">
+    <div className="w-full h-full flex flex-col items-center justify-start lg:justify-center p-8 py-2 select-none overflow-hidden">
       {loading && <LoadingComponent />}
       <div
-        className={`h-[100%] lg:h-auto lg:w-1/4 mt-8 transition-opacity duration-700 ease-in-out opacity-100`}
+        className={`h-[100%] md:w-[85%] 2xl:w-[35%] mt-8 transition-opacity duration-700 ease-in-out opacity-100 rounded-2xl`}
       >
         <StoryControls stories={calculated} urls={urls} />
       </div>
-
-      <Link
-        to="/"
-        className={`hidden lg:flex flex-row items-center absolute top-4 left-4 transition-opacity duration-700 ease-in-out opacity-100`}
-      >
-        <img src="/logo.webp" className="w-24" />
-        <h1 className="text-4xl md:text-5xl font-bold text-white">
-          WhatsWrapped
-        </h1>
-      </Link>
     </div>
   );
 }
