@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { StoryControls, StoryItem } from "@/components/ui/story-controls";
 import { TheCore } from "@/components/ui/cards/thecore";
 import { Messages } from "@/components/ui/cards/messages";
